@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,12 +38,15 @@ public class UserActivity extends AppCompatActivity {
                     case "我的联系人":
                         intent.setClass(UserActivity.this,my_contact.class);
                         startActivity(intent);
+                        break;
                     case "我的账户":
                         intent.setClass(UserActivity.this,my_account.class);
                         startActivity(intent);
+                        break;
                     case "我的密码":
-                        intent.setClass(UserActivity.this,my_contact.class);
+                        intent.setClass(UserActivity.this,my_pwd.class);
                         startActivity(intent);
+                        break;
                 }
             }
         });
