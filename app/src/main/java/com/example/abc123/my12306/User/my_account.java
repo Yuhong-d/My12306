@@ -35,9 +35,12 @@ public class my_account extends AppCompatActivity {
         String values[] = {"dong", "冬不拉", "身份证", "1111111111111", "成人", "13982763892"};
 
         ls1 = findViewById(R.id.ls1);
+        ls2=findViewById(R.id.ls2);
         listCreate(attributes, values, ls1, R.layout.account_list_item);
         listCreate(attributes,values,ls1,R.layout.account_list_item_2);
-
+        View view=ls1.getAdapter().getView(4,null,ls1);
+        view.findViewById(R.id.img).setVisibility(View.VISIBLE);
+        ls1.addFooterView(view);
         ls1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -127,7 +130,10 @@ public class my_account extends AppCompatActivity {
             map.put("value", values[i]);
             datalist.add(map);
         }
-        adapter=new SimpleAdapter(my_account.this,datalist,resource,
+//        adapter=new SimpleAdapter(my_account.this,datalist,resource,
+//                new String[]{"attribute","value"},
+//                new int[]{R.id.attribute,R.id.value});
+        adapter=new MyAdapter(my_account.this,datalist,resource,
                 new String[]{"attribute","value"},
                 new int[]{R.id.attribute,R.id.value});
         ls.setAdapter(adapter);
