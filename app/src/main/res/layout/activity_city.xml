@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/city_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:divider="@color/darkgray"
+            android:dividerHeight="2dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/city_dialog"
+        android:layout_width="80.0dip"
+        android:layout_height="80.0dip"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30.0sp"
+        android:visibility="gone" />
+
+    <com.example.abc123.my12306.Ticket.QuicLocationBar
+        android:id="@+id/city_loactionbar"
+        android:layout_width="30.0dip"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right|center"
+        android:paddingBottom="2dp" />
+
+
+</FrameLayout>
