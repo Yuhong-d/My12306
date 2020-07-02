@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.abc123.my12306.User.UserActivity;
-
 public class MainActivity extends AppCompatActivity {
     private Button bt_login;
     private TextView tv_f;
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (judge()) {
-                    startActivity(new Intent(MainActivity.this, UserActivity.class));
+                    startActivity(new Intent(MainActivity.this, ViewPagerActivity.class));
                 }
             }
         });

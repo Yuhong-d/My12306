@@ -1,37 +1,54 @@
-package com.example.abc123.my12306.User;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.abc123.my12306.Fragment;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.example.abc123.my12306.R;
+import com.example.abc123.my12306.User.UserActivity;
+import com.example.abc123.my12306.User.my_account;
+import com.example.abc123.my12306.User.my_contact;
+import com.example.abc123.my12306.User.my_pwd;
 
 import java.util.List;
 import java.util.Map;
 
-public class UserActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+
+public class MyFragment extends Fragment {
+
     private ListView listView;
     // 定义数组
     private String[] data = {"我的联系人","我的账户","我的密码"};
     List<Map<String, Object>> dataList;
-//此页面已被移动至MyFragment，此页待作废
+
+    public MyFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
-        listView =  findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserActivity.this, R.layout.my_item,R.id.textView2, data);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.activity_user, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listView =  view.findViewById(R.id.listView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_item,R.id.textView2, data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent=new Intent();
@@ -39,25 +56,25 @@ public class UserActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (data[position]){
                     case "我的联系人":
-                        intent.setClass(UserActivity.this,my_contact.class);
+                        intent.setClass(getActivity(), my_contact.class);
                         startActivity(intent);
                         break;
                     case "我的账户":
-                        intent.setClass(UserActivity.this,my_account.class);
+                        intent.setClass(getActivity(), my_account.class);
                         startActivity(intent);
                         break;
                     case "我的密码":
-                       layDialog();
+                        layDialog();
                         break;
                 }
             }
         });
-
     }
+
     private void layDialog(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(UserActivity.this);
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity() );
         //创建view，并将布局加入view中
-        View view= LayoutInflater.from(UserActivity.this).inflate(R.layout.number_dialog,null,false);
+        View view= LayoutInflater.from(getActivity()).inflate(R.layout.number_dialog,null,false);
         //将view加入builder
         builder.setView(view).setTitle("请输入原密码：");
         //创建dialog
@@ -71,7 +88,7 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
-                intent.setClass(UserActivity.this,my_pwd.class);
+                intent.setClass(getActivity(), my_pwd.class);
                 startActivity(intent);
             }
         });
@@ -83,4 +100,6 @@ public class UserActivity extends AppCompatActivity {
         });
         dialog.show();
     }
+
+   
 }

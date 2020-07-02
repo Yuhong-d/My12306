@@ -4,10 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import com.example.abc123.my12306.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class my_account extends AppCompatActivity {
     private ListView ls1,ls2;
@@ -38,9 +41,6 @@ public class my_account extends AppCompatActivity {
         ls2=findViewById(R.id.ls2);
         listCreate(attributes, values, ls1, R.layout.account_list_item);
         listCreate(attributes,values,ls1,R.layout.account_list_item_2);
-        View view=ls1.getAdapter().getView(4,null,ls1);
-        view.findViewById(R.id.img).setVisibility(View.VISIBLE);
-        ls1.addFooterView(view);
         ls1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -55,6 +55,7 @@ public class my_account extends AppCompatActivity {
             }
         });
     }
+    //多选框，待修正
     private void multiDialog(){
         AlertDialog.Builder builder=new AlertDialog.Builder(my_account.this);
         builder.setTitle("请选择：");
@@ -130,9 +131,6 @@ public class my_account extends AppCompatActivity {
             map.put("value", values[i]);
             datalist.add(map);
         }
-//        adapter=new SimpleAdapter(my_account.this,datalist,resource,
-//                new String[]{"attribute","value"},
-//                new int[]{R.id.attribute,R.id.value});
         adapter=new MyAdapter(my_account.this,datalist,resource,
                 new String[]{"attribute","value"},
                 new int[]{R.id.attribute,R.id.value});
