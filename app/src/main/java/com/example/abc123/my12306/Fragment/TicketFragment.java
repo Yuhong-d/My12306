@@ -34,6 +34,32 @@ public class TicketFragment extends Fragment {
         three=getActivity().findViewById(R.id.imageView3);
         five=getActivity().findViewById(R.id.imageView5);
 
+         three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),CityActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        five.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),CityActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        turn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String s1 = tv_star.getText().toString();
+                String s2 = tv_end.getText().toString();
+                tv_star.setText(s2);
+                tv_end.setText(s1);
+            }
+        });
 
 
     }
