@@ -42,6 +42,7 @@ public class my_contact extends AppCompatActivity {
         adapter = new SimpleAdapter(this,data,R.layout.account_list_item,new String[]{"name","idCard","tel"},
                 new int[]{ R.id.tvNameContact,  R.id.tvIdCardContact, R.id.tvTelContact });
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,8 +62,8 @@ public class my_contact extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             //点击后返回
-           // case android.R.id.home:
-            //    finish();
+            case android.R.id.home:
+                finish();
             case R.id.add:
                 //跳转到添加页面
                 Intent intent = new Intent();

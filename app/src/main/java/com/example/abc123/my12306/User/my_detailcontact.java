@@ -188,8 +188,8 @@ public class my_detailcontact extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             //点击后返回
-           // case android.R.id.home:
-           //     finish();
+            case android.R.id.home:
+                finish();
             case R.id.delect:
                 //删除此联系人
         }
