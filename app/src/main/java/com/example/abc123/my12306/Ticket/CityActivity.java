@@ -78,6 +78,8 @@ public class CityActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }finally {
+            jsoninputStream.close();
         }
         return names;
     }

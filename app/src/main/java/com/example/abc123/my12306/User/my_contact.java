@@ -29,8 +29,8 @@ public class my_contact extends AppCompatActivity {
         row.put("idCard", "身份证:110110199009091111");
         row.put("tel", "电话:138888888899");
         data.add(row);
-        adapter = new SimpleAdapter(this,data,R.layout.account_list_item,new String[]{"name","idCard","tel"},
-                new int[]{ R.id.tvNameContact,  R.id.tvIdCardContact, R.id.tvTelContact });
+        adapter = new SimpleAdapter(this,data,R.layout.ticket_addusr_list_item,new String[]{"name","idCard","tel"},
+                new int[]{ R.id.tvName,  R.id.tvIdCard, R.id.tvTel});
         listView.setAdapter(adapter);
     }
 }

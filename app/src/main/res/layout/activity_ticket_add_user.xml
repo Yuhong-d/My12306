@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ListView
-        android:id="@+id/ticket_addusr_ls_item"
+        android:id="@+id/ticket_addusr_ls"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
