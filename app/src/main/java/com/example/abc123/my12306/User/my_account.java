@@ -34,10 +34,10 @@ public class my_account extends AppCompatActivity {
         final String attributes[] = {"用户名", "姓名", "证件类型", "证件号码", "乘客类型", "电话"};
         String values[] = {"dong", "冬不拉", "身份证", "1111111111111", "成人", "13982763892"};
 
-        ls1 = findViewById(R.id.ls1);
-        ls2=findViewById(R.id.ls2);
+        ls1 = findViewById(R.id.lv1);
+        ls2=findViewById(R.id.lv2);
         listCreate(attributes, values, ls1, R.layout.account_list_item);
-        listCreate(attributes,values,ls1,R.layout.account_list_item_2);
+        listCreate(attributes,values,ls1,R.layout.detailcontact_list_item);
         View view=ls1.getAdapter().getView(4,null,ls1);
         view.findViewById(R.id.img).setVisibility(View.VISIBLE);
         ls1.addFooterView(view);
