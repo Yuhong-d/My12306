@@ -38,7 +38,6 @@ public class my_account extends AppCompatActivity {
         String values[] = {"dong", "冬不拉", "身份证", "1111111111111", "成人", "13982763892"};
 
         ls1 = findViewById(R.id.ls1);
-        ls2=findViewById(R.id.ls2);
         listCreate(attributes, values, ls1, R.layout.account_list_item);
         listCreate(attributes,values,ls1,R.layout.account_list_item_2);
         ls1.setOnItemClickListener(new AdapterView.OnItemClickListener() {

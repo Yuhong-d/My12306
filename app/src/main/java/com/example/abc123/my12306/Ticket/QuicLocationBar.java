@@ -1,17 +1,16 @@
 package com.example.abc123.my12306.Ticket;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.abc123.my12306.R;
 
-import androidx.annotation.ColorInt;
 
 public class QuicLocationBar extends View {
     private String characters[] = { "#", "A", "B", "C", "D", "E", "F", "G",
@@ -20,6 +19,8 @@ public class QuicLocationBar extends View {
     private int choose = -1;
     private Paint paint = new Paint();
     private OnTouchLetterChangedListener mOnTouchLetterChangedListener;
+    private TextView mTextDialog;
+
 
     public QuicLocationBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -40,6 +41,10 @@ public class QuicLocationBar extends View {
             OnTouchLetterChangedListener onTouchLetterChangedListener) {
         this.mOnTouchLetterChangedListener = onTouchLetterChangedListener;
     }
+    public void setTextDialog(TextView dialog) {
+        this.mTextDialog = dialog;
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -53,7 +58,7 @@ public class QuicLocationBar extends View {
             paint.setColor(getResources().getColor(R.color.colorPrimaryDark));
             paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
-            paint.setTextSize(20);
+            paint.setTextSize(40);
             if (i == choose) {// choose变量表示当前显示的字符位置，若没有触摸则为-1
                 paint.setColor(getResources().getColor(R.color.myred));
                 paint.setFakeBoldText(true);

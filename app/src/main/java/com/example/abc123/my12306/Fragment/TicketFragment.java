@@ -10,9 +10,6 @@ import com.example.abc123.my12306.R;
 
 import androidx.fragment.app.Fragment;
 
-/**
- * Created by 皓哥~_~ on 2020/6/30.
- */
 
 public class TicketFragment extends Fragment {
     public  TicketFragment(){

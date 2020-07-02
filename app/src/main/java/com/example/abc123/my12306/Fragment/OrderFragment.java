@@ -10,10 +10,6 @@ import com.example.abc123.my12306.R;
 
 import androidx.fragment.app.Fragment;
 
-/**
- * Created by 皓哥~_~ on 2018/7/4.
- */
-
 public class OrderFragment extends Fragment {
     public OrderFragment(){
 
