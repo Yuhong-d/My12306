@@ -9,21 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Ticket.AddUserInfo"></activity>
-        <activity android:name=".Ticket.CityActivity">
+        <activity android:name=".ViewPagerActivity"></activity>
+        <activity android:name=".User.my_detailcontact" />
+        <activity android:name=".User.my_pwd" />
+        <activity android:name=".User.my_account" />
+        <activity android:name=".User.my_contact" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewPagerActivity" />
-        <activity android:name=".User.my_detailcontact" />
-        <activity android:name=".User.my_pwd" />
-        <activity android:name=".User.my_account" />
-        <activity android:name=".User.my_contact" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".StartActivity"></activity>
         <activity android:name=".User.UserActivity" />
     </application>
 

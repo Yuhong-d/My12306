@@ -1,5 +1,6 @@
 package com.example.abc123.my12306.Fragment;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.abc123.my12306.R;
+import com.example.abc123.my12306.Ticket.CityActivity;
+import com.example.abc123.my12306.Ticket.Ticketone;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,7 +46,7 @@ public class TicketFragment extends Fragment {
          three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),CityActivity.class);
+                Intent intent = new Intent(getActivity(), CityActivity.class);
                 startActivity(intent);
             }
         });
