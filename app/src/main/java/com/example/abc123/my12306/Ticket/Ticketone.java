@@ -2,12 +2,12 @@ package com.example.abc123.my12306.Ticket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
 import com.example.abc123.my12306.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Ticketone extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticketone);
-        listView = findViewById(R.id.lv_ticketBuy);
+        listView = findViewById(R.id.lv_ticket);
         list = new ArrayList<>();
         Map<String,Object> map1 = new HashMap<>();
         map1.put("banci","D5");
@@ -36,5 +36,13 @@ public class Ticketone extends AppCompatActivity {
         list.add(map1);
         Tickettwo tickettwo = new Tickettwo(this,list);
         listView.setAdapter(tickettwo);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setClass(Ticketone.this, com.example.abc123.my12306.Ticket.Tickettwo.class);
+                startActivity(intent);
+            }
+        });
     }
 }
