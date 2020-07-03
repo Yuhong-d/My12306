@@ -73,10 +73,10 @@ public class TicketFragment extends Fragment {
        bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Ticketone.class);
+                Intent intent =new Intent();
+                intent.setClass(getActivity(), Ticketone.class);
                 startActivity(intent);
             }
         });
-
     }
 }
