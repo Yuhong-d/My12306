@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.Ticket.CityActivity;
+import com.example.abc123.my12306.Ticket.Ticketone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,9 +37,9 @@ public class TicketFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tv_star=view.findViewById(R.id.tv_start);
-        tv_end=getActivity().findViewById(R.id.tv_end);
-        bt_search=getActivity().findViewById(R.id.bt_search);
-        turn = getActivity().findViewById(R.id.imageView4);
+        tv_end=view.findViewById(R.id.tv_end);
+        bt_search=view.findViewById(R.id.bt_search);
+        turn = view.findViewById(R.id.imageView4);
         three=view.findViewById(R.id.imageView3);
         five=view.findViewById(R.id.imageView5);
          tv_star.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +72,7 @@ public class TicketFragment extends Fragment {
        bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Ticketone.class);
+                Intent intent = new Intent(getActivity(), Ticketone.class);
                 startActivity(intent);
             }
         });

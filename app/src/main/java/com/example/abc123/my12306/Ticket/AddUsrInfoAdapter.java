@@ -46,6 +46,8 @@ public class AddUsrInfoAdapter extends BaseAdapter {
             viewHodler.tv1=convertView.findViewById(R.id.tvName);
             viewHodler.tv2=convertView.findViewById(R.id.tvIdCard);
             viewHodler.tv3=convertView.findViewById(R.id.tvTel);
+            viewHodler.cbx_addusr=convertView.findViewById(R.id.cbx_addusr);
+            viewHodler.img=convertView.findViewById(R.id.img);
             convertView.setTag(viewHodler);
         }else {
             viewHodler= (ViewHodler) convertView.getTag();
