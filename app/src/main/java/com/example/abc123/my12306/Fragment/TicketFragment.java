@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.Ticket.CityActivity;
-import com.example.abc123.my12306.Ticket.Ticketone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,47 +35,46 @@ public class TicketFragment extends Fragment {
      @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tv_star=getActivity().findViewById(R.id.tv_start);
+        tv_star=view.findViewById(R.id.tv_start);
         tv_end=getActivity().findViewById(R.id.tv_end);
         bt_search=getActivity().findViewById(R.id.bt_search);
         turn = getActivity().findViewById(R.id.imageView4);
-        three=getActivity().findViewById(R.id.imageView3);
-        five=getActivity().findViewById(R.id.imageView5);
+        three=view.findViewById(R.id.imageView3);
+        five=view.findViewById(R.id.imageView5);
+         tv_star.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(getActivity(), CityActivity.class);
+                 startActivity(intent);
+             }
+         });
 
-         three.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CityActivity.class);
-                startActivity(intent);
-            }
-        });
+         five.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(getActivity(),CityActivity.class);
+                 startActivity(intent);
+             }
+         });
 
-        five.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),CityActivity.class);
-                startActivity(intent);
-            }
-        });
+         turn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
 
-        turn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String s1 = tv_star.getText().toString();
-                String s2 = tv_end.getText().toString();
-                tv_star.setText(s2);
-                tv_end.setText(s1);
-            }
-        });
+                 String s1 = tv_star.getText().toString();
+                 String s2 = tv_end.getText().toString();
+                 tv_star.setText(s2);
+                 tv_end.setText(s1);
+             }
+         });
 
        bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent();
-                intent.setClass(getActivity(), Ticketone.class);
+                Intent intent = new Intent(getActivity(),Ticketone.class);
                 startActivity(intent);
             }
         });
+
     }
 }
