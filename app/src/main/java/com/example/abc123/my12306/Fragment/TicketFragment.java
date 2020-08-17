@@ -42,6 +42,17 @@ public class TicketFragment extends Fragment {
         turn = view.findViewById(R.id.imageView4);
         three=view.findViewById(R.id.imageView3);
         five=view.findViewById(R.id.imageView5);
+         ImageView turn = getActivity().findViewById(R.id.turn);
+         turn.setImageResource(R.drawable.turn);
+         turn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+              String left=tv_star.getText().toString().trim();
+              String right=tv_end.getText().toString().trim();
+              tv_star.setText("right");
+              tv_end.setText("left");
+             }
+         });
          tv_star.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
