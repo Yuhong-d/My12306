@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".User.my_addcontact"></activity>
+        <activity android:name=".Order.PaidActivity"></activity>
+        <activity android:name=".Order.UnpaidActivity" />
+        <activity android:name=".User.my_addcontact" />
         <activity android:name=".Ticket.AddUserInfo" />
-        <activity android:name=".Ticket.CityActivity"></activity>
+        <activity android:name=".Ticket.CityActivity" />
         <activity android:name=".ViewPagerActivity" />
         <activity android:name=".User.my_detailcontact" />
         <activity android:name=".User.my_pwd" />

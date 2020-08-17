@@ -5,4 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="myred">#DC143C</color>
     <color name="darkgray">#708090</color>
+    <color name="blue">#38B0DE</color>
+    <color name="lightgray">#C0D9D9</color>
 </resources>
