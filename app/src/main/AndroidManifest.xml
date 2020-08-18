@@ -13,6 +13,7 @@
         <activity android:name=".User.my_detailcontact" />
         <activity android:name=".User.my_pwd" />
         <activity android:name=".User.my_account" />
+        <activity android:name=".User.my_addcontact" />
         <activity android:name=".User.my_contact" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Ticket.Ticketone" />

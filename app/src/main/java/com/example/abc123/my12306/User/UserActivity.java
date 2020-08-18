@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.example.abc123.my12306.R;
 
@@ -31,7 +30,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         listView =  findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserActivity.this, R.layout.my_item,R.id.textView2, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserActivity.this, R.layout.my_item,R.id.texttime, data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent=new Intent();

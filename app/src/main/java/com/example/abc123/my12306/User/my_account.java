@@ -35,7 +35,7 @@ public class my_account extends AppCompatActivity {
         setContentView(R.layout.activity_my_account);
 
         final String attributes[] = {"用户名", "姓名", "证件类型", "证件号码", "乘客类型", "电话"};
-        String values[] = {"dong", "冬不拉", "身份证", "1111111111111", "成人", "13982763892"};
+       String values[] = {"dong", "冬不拉", "身份证", "1111111111111", "成人", "13982763892"};
 
         ls1 = findViewById(R.id.ls1);
         listCreate(attributes, values, ls1, R.layout.account_list_item);
@@ -109,6 +109,8 @@ public class my_account extends AppCompatActivity {
             confirm.setOnClickListener(new android.view.View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String str = edt_number.getText().toString();
+                   // value.setText(str);
                         Toast.makeText(my_account.this, "添加成功", Toast.LENGTH_SHORT).show();
                 }
             });

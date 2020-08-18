@@ -76,7 +76,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/texttime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="出发时间"
