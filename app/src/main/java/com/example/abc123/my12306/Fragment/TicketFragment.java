@@ -25,7 +25,6 @@ public class TicketFragment extends Fragment {
     private Button bt_search;
     private SharedPreferences sp;
     private ImageView turn;
-    private ImageView three,five;
     public  TicketFragment(){
         //需要空的构造方法
     }
@@ -39,9 +38,7 @@ public class TicketFragment extends Fragment {
         tv_star=view.findViewById(R.id.tv_start);
         tv_end=view.findViewById(R.id.tv_end);
         bt_search=view.findViewById(R.id.bt_search);
-        turn = view.findViewById(R.id.imageView4);
-        three=view.findViewById(R.id.imageView3);
-        five=view.findViewById(R.id.imageView5);
+        turn = view.findViewById(R.id.turn);
          ImageView turn = getActivity().findViewById(R.id.turn);
          turn.setImageResource(R.drawable.turn);
          turn.setOnClickListener(new View.OnClickListener() {
@@ -57,15 +54,14 @@ public class TicketFragment extends Fragment {
              @Override
              public void onClick(View v) {
                  Intent intent = new Intent(getActivity(), CityActivity.class);
-                 startActivity(intent);
+                 startActivityForResult(intent,110);
              }
          });
-
-         five.setOnClickListener(new View.OnClickListener() {
+         tv_end.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(getActivity(),CityActivity.class);
-                 startActivity(intent);
+                 Intent intent = new Intent(getActivity(), CityActivity.class);
+                 startActivityForResult(intent,120);
              }
          });
 
@@ -88,5 +84,19 @@ public class TicketFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String s=data.getStringExtra("city");
+        switch (requestCode){
+            case 110:
+                tv_star.setText(s);
+                break;
+            case 120:
+               tv_end.setText(s);
+               break;
+        }
     }
 }

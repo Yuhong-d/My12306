@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.abc123.my12306.R;
-import com.example.abc123.my12306.User.UserActivity;
 import com.example.abc123.my12306.User.my_account;
 import com.example.abc123.my12306.User.my_contact;
 import com.example.abc123.my12306.User.my_pwd;
@@ -48,7 +47,7 @@ public class MyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView =  view.findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_item,R.id.textView2, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_item,R.id.texttime, data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent=new Intent();

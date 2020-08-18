@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Order.PaidActivity"></activity>
+        <activity android:name=".Ticket.PaidSuccessActivity"></activity>
+        <activity android:name=".Ticket.TicketSubmitActivity" />
+        <activity android:name=".Ticket.TicketBookingActivity" />
+        <activity android:name=".Order.PaidActivity" />
         <activity android:name=".Order.UnpaidActivity" />
         <activity android:name=".User.my_addcontact" />
         <activity android:name=".Ticket.AddUserInfo" />

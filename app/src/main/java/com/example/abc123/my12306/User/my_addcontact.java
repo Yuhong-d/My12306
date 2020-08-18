@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -27,22 +28,22 @@ public class my_addcontact extends AppCompatActivity {
         listView = findViewById(R.id.lv1);
         data =new ArrayList<>();
         Map<String,Object> row1 = new HashMap<>();
-        row1.put("name", "姓名");
+        row1.put("attribute", "姓名");
         data.add(row1);
         Map<String,Object> row2 = new HashMap<>();
-        row2.put("idCardtype", "证件类型");
+        row2.put("attribute", "证件类型");
         data.add(row2);
         Map<String,Object> row3 = new HashMap<>();
-        row3.put("idcard", "证件号吗");
+        row3.put("attribute", "证件号吗");
         data.add(row3);
         Map<String,Object> row4 = new HashMap<>();
-        row4.put("passeagertype", "乘客类型");
+        row4.put("attribute", "乘客类型");
         data.add(row4);
         Map<String,Object> row5 = new HashMap<>();
-        row5.put("tel", "电话");
+        row5.put("attribute", "电话");
         data.add(row5);
-        adapter = new SimpleAdapter(this,data,R.layout.account_list_item,new String[]{"name"},
-                new int[]{ R.id.tvNameContact});
+        adapter = new SimpleAdapter(this,data,R.layout.account_list_item_2,new String[]{"attribute"},
+                new int[]{ R.id.attribute});
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

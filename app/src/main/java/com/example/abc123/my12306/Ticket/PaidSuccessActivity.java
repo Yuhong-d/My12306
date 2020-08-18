@@ -1,23 +1,19 @@
-package com.example.abc123.my12306.Order;
+package com.example.abc123.my12306.Ticket;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.abc123.my12306.Order.PaidActivity;
+import com.example.abc123.my12306.Order.Unpaid;
+import com.example.abc123.my12306.Order.UnpaidActivity;
 import com.example.abc123.my12306.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -31,21 +27,20 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class PaidActivity extends AppCompatActivity {
-    private ListView ls;
-    private List<Map<String, String>> dataList;
-    private TextView tv;
+public class PaidSuccessActivity extends AppCompatActivity {
+    private TextView textView;
+    private ImageView imageView;
     private Button button;
+    private List<Map<String, String>> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paid);
-        ls=findViewById(R.id.ls);
-        tv=findViewById(R.id.tv_ordernum);
-        button=findViewById(R.id.button);
+        setContentView(R.layout.activity_paid_success);
+        textView=findViewById(R.id.textView);
+        imageView=findViewById(R.id.imageView);
+        button=findViewById(R.id.btn);
         Intent intent=getIntent();
-        tv.setText(intent.getStringExtra("num"));
         dataList=new ArrayList<Map<String, String>>();
         Map<String,String> map=new HashMap<>();
         map.put("name","孔乙己");
@@ -53,61 +48,21 @@ public class PaidActivity extends AppCompatActivity {
         map.put("time",intent.getStringExtra("time"));
         map.put("carriage","2车10号");
         dataList.add(map);
-        OrderActivityAdapter activityAdapter=new OrderActivityAdapter(PaidActivity.this,dataList);
-        ls.setAdapter(activityAdapter);
-        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listDialog();
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layDialog();
-            }
-        });
-    }
-    private void listDialog(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(PaidActivity.this);
-        final String[] items={"退票","改签"};
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(PaidActivity.this,items[which],Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNegativeButton("取消",null);
-        builder.create().show();
-    }
-    private void layDialog(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(PaidActivity.this);
-        //创建view，并将布局加入view中
-        View view= LayoutInflater.from(PaidActivity.this).inflate(R.layout.layout_zxing,null,false);
-        //将view加入builder
-        builder.setView(view);
-        //创建dialog
-        final Dialog dialog=builder.create();
-        //初始化控件
-        final TextView edt=(TextView) view.findViewById(R.id.preday);
-        Button confirm=(Button)view.findViewById(R.id.button);
-        ImageView imageView=(ImageView)view.findViewById(R.id.imageView);
         StringBuffer s=new StringBuffer();
         for (int i=0;i<dataList.size();i++){
-            Map<String,String> map=dataList.get(i);
-            s.append(map.get("name")+","+map.get("train")+","+map.get("time")+map.get("carriage"));
+            Map<String,String> map1=dataList.get(i);
+            s.append(map1.get("name")+","+map1.get("train")+","+map1.get("time")+map1.get("carriage"));
         }
         Bitmap bitmap=createQRCodeBitmap(s.toString(),1000,1000,"UTF-8",
                 "H","1");
         imageView.setImageBitmap(bitmap);
-        //设置Button的事件和内容
-        confirm.setOnClickListener(new android.view.View.OnClickListener() {
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                finish();
             }
         });
-        dialog.show();
     }
     /**
      * 生成简单二维码
@@ -118,8 +73,8 @@ public class PaidActivity extends AppCompatActivity {
      * @param character_set          编码方式（一般使用UTF-8）
      * @param error_correction_level 容错率 L：7% M：15% Q：25% H：35%
      * @param margin                 空白边距（二维码与边框的空白区域）
-//     * @param color_black            黑色色块
-//     * @param color_white            白色色块
+    //     * @param color_black            黑色色块
+    //     * @param color_white            白色色块
      * @return BitMap
      */
     public static Bitmap createQRCodeBitmap(String content, int width, int height,

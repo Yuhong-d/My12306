@@ -63,6 +63,17 @@ public class OrderAdapter extends BaseAdapter {
         viewHolder.tv5.setText((String)data.get(position).get("end"));
         viewHolder.tv6.setText((String)data.get(position).get("person"));
         viewHolder.tv7.setText((String)data.get(position).get("price"));
+        switch ((String) data.get(position).get("type")){
+            case "已支付":
+                viewHolder.tv2.setTextColor(context.getResources().getColor(R.color.blue));
+                break;
+            case "待支付":
+                viewHolder.tv2.setTextColor(context.getResources().getColor(R.color.orange));
+                break;
+            case "已取消":
+                viewHolder.tv2.setTextColor(context.getResources().getColor(R.color.darkgray));
+                break;
+        }
         viewHolder.imageView.setImageResource(R.drawable.forward_25);
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +89,7 @@ public class OrderAdapter extends BaseAdapter {
                         break;
                     case "待支付":
                         intent.setClass(context,UnpaidActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                         break;
                 }
