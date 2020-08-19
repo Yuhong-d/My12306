@@ -1,12 +1,17 @@
-package adapter;
+package com.example.abc123.my12306.Ticket.adpter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.abc123.my12306.R;
+import com.example.abc123.my12306.Ticket.AddUserInfo;
+import com.example.abc123.my12306.Ticket.Tickettwo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +40,7 @@ public class Ticketadapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         ViewHolder viewHolder = null;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -43,6 +48,7 @@ public class Ticketadapter extends BaseAdapter {
             viewHolder.tv_seattype = convertView.findViewById(R.id.tv_seattype);
             viewHolder.tv_ticket = convertView.findViewById(R.id.tv_ticket);
             viewHolder.tv_price = convertView.findViewById(R.id.tv_price);
+            viewHolder.btn = convertView.findViewById(R.id.btn_buy);
             convertView.setTag(viewHolder);
         }else{
             viewHolder  = (ViewHolder) convertView.getTag();
@@ -57,5 +63,6 @@ public class Ticketadapter extends BaseAdapter {
         private TextView tv_seattype;
         private TextView tv_ticket;
         private TextView tv_price;
+        private Button btn;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.abc123.my12306.Ticket;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.abc123.my12306.Fragment.TicketFragment;
 import com.example.abc123.my12306.R;
 
 import org.json.JSONArray;
@@ -19,7 +22,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/*
+点返回会出bug，待解决，思路是禁止返回，弹出提醒
+ */
 public class CityActivity extends AppCompatActivity {
 
     private ListView mCityLit;
@@ -78,6 +83,8 @@ public class CityActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }finally {
+            jsoninputStream.close();
         }
         return names;
     }
@@ -89,8 +96,12 @@ public class CityActivity extends AppCompatActivity {
                                 long arg3) {
             CityBean cityModel = (CityBean) mCityLit.getAdapter()
                     .getItem(pos);
-            Toast.makeText(CityActivity.this, cityModel.getCityName(),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CityActivity.this, cityModel.getCityName(),
+//                    Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(CityActivity.this, TicketFragment.class);
+            intent.putExtra("city",cityModel.getCityName());
+            setResult(RESULT_OK,intent);
+            finish();
         }
 
     }

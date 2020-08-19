@@ -25,5 +25,6 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         return list.get(position);
     }
+
 }
 

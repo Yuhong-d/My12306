@@ -9,7 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewPagerActivity"></activity>
+        <activity android:name=".Ticket.PaidSuccessActivity"></activity>
+        <activity android:name=".Ticket.TicketSubmitActivity" />
+        <activity android:name=".Ticket.TicketBookingActivity" />
+        <activity android:name=".Order.PaidActivity" />
+        <activity android:name=".Order.UnpaidActivity" />
+        <activity android:name=".User.my_addcontact" />
+        <activity android:name=".Ticket.AddUserInfo" />
+        <activity android:name=".Ticket.CityActivity" />
+        <activity android:name=".ViewPagerActivity" />
         <activity android:name=".User.my_detailcontact" />
         <activity android:name=".User.my_pwd" />
         <activity android:name=".User.my_account" />
@@ -18,7 +26,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Ticket.Ticketone" />
         <activity android:name=".Ticket.Tickettwo" />
-        <activity android:name=".Ticket.CityActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

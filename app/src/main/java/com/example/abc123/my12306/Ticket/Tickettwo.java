@@ -4,26 +4,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.abc123.my12306.R;
+import com.example.abc123.my12306.Ticket.adpter.Ticketadapter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import adapter.Ticketadapter;
 
 public class Tickettwo extends AppCompatActivity {
     private ListView listView;
     private List<Map<String,Object>> list;
-    Calendar rightNow = Calendar.getInstance();
+    private TextView tv,tv1;
     private TextView preday,afterday,texttime;
+    Calendar rightNow = Calendar.getInstance();
     private int cyear = rightNow.get(Calendar.YEAR);
     private int cmonth = rightNow.get(Calendar.MONTH);
     private int cdate = rightNow.get(Calendar.DATE);
@@ -33,11 +37,11 @@ public class Tickettwo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tickettwo);
-        listView = findViewById(R.id.lv_ticketBuy);
         preday = findViewById(R.id.preday);
         afterday = findViewById(R.id.afterday);
         texttime = findViewById(R.id.texttime);
         texttime.setText(cyear+"-"+(cmonth+1)+"-"+cdate);
+        listView = findViewById(R.id.lv_ticketBuy);
         list = new ArrayList<>();
         Map<String,Object> map1 = new HashMap<>();
         map1.put("seattype","无座");
@@ -46,7 +50,23 @@ public class Tickettwo extends AppCompatActivity {
         list.add(map1);
         Ticketadapter ticketadapter = new Ticketadapter(this,list);
         listView.setAdapter(ticketadapter);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent();
+                intent.setClass(Tickettwo.this,AddUserInfo.class);
+                startActivity(intent);
+            }
+        });
+        tv=findViewById(R.id.textView5);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setClass(Tickettwo.this,TicketBookingActivity.class);
+                startActivity(intent);
+            }
+        });
         preday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

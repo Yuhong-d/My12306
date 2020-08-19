@@ -1,4 +1,4 @@
-package adapter;
+package com.example.abc123.my12306.Ticket.adpter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,11 +10,11 @@ import com.example.abc123.my12306.R;
 import java.util.List;
 import java.util.Map;
 
-public class Tickettwo extends BaseAdapter {
+public class TickettwoAdapter extends BaseAdapter {
     private Context context;
     private List<Map<String, Object>> data;
 
-    public Tickettwo(Context context, List<Map<String, Object>> data) {
+    public TickettwoAdapter(Context context, List<Map<String, Object>> data) {
         this.context = context;
         this.data = data;
     }

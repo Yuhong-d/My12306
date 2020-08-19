@@ -4,12 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +20,6 @@ import com.example.abc123.my12306.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class my_account extends AppCompatActivity {
     private ListView ls1,ls2;
@@ -38,7 +35,7 @@ public class my_account extends AppCompatActivity {
        String values[] = {"dong", "冬不拉", "身份证", "1111111111111", "成人", "13982763892"};
 
         ls1 = findViewById(R.id.ls1);
-        listCreate(attributes, values, ls1, R.layout.account_list_item);
+//        listCreate(attributes, values, ls1, R.layout.ticket_addusr_list_item);
         listCreate(attributes,values,ls1,R.layout.account_list_item_2);
         ls1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
