@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.abc123.my12306.MainActivity;
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.User.my_account;
 import com.example.abc123.my12306.User.my_contact;
@@ -29,6 +30,7 @@ import androidx.fragment.app.Fragment;
 public class MyFragment extends Fragment {
 
     private ListView listView;
+    private Button btn;//退出
     // 定义数组
     private String[] data = {"我的联系人","我的账户","我的密码"};
     List<Map<String, Object>> dataList;
@@ -47,6 +49,7 @@ public class MyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listView =  view.findViewById(R.id.listView);
+        btn=view.findViewById(R.id.button);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_item,R.id.texttime, data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +69,12 @@ public class MyFragment extends Fragment {
                         layDialog();
                         break;
                 }
+            }
+        });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
         });
     }

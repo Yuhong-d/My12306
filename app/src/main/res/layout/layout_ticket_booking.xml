@@ -11,7 +11,9 @@
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="44dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -20,46 +22,50 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:orientation="vertical"
                 android:layout_weight="1"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/starpl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="北京"
-                    android:textSize="25sp" />
+                    android:textSize="23sp"
+                    android:textColor="@color/dark"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"/>
 
                 <TextView
                     android:id="@+id/startime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="7:00"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textAlignment="center"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="190dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/ticknum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
                     android:gravity="center"
-                    android:text="D5" />
+                    android:text="D5"
+                    android:textSize="23sp"
+                    android:textColor="@color/dark"/>
 
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="194dp"
                     android:layout_height="33dp"
-                    app:srcCompat="@drawable/way" />
+                    app:srcCompat="@drawable/to" />
 
                 <TextView
                     android:id="@+id/ticktime"
@@ -67,30 +73,35 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2014-7-1（0日）"
-                    android:textSize="20sp" />
+                    android:textSize="23sp"
+                    android:textColor="@color/dark"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_weight="1"
-                android:layout_gravity="right">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/endpl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="上海"
-                    android:textSize="25sp" />
+                    android:textSize="23sp"
+                    android:textColor="@color/dark"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"/>
 
                 <TextView
                     android:id="@+id/endtime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="11:00"
                     android:textSize="20sp"
-                    android:text="11:00" />
+                    android:textAlignment="center"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -103,58 +114,72 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-            <TextView
-                android:id="@+id/tickleft"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="无座（30张）"
-                android:textSize="25sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="￥150"
-                android:textSize="25sp" />
+                <TextView
+                    android:id="@+id/tickleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="无座（30张）"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="￥150"
+                    android:textColor="@color/orange"
+                    android:textSize="25sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_addhuman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="+添加乘车人"
+                android:textColor="@color/orange"
+                android:background="@color/gray"
                 android:textSize="25sp" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_weight="2"
+            android:background="@color/blue"
+            android:text="订单总额：￥0.0元"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textSize="30dp"
-                android:text="订单总额：￥0.0元"
-                android:background="@color/darkgray"/>
-
-            <TextView
-                android:id="@+id/tv_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="30dp"
-                android:text="提交"
-                android:gravity="center"
-                android:background="@color/myred"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

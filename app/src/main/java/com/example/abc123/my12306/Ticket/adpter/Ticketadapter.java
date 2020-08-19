@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.Ticket.AddUserInfo;
+import com.example.abc123.my12306.Ticket.TicketBookingActivity;
+import com.example.abc123.my12306.Ticket.Ticketone;
 import com.example.abc123.my12306.Ticket.Tickettwo;
 
 import java.util.List;
@@ -56,6 +58,14 @@ public class Ticketadapter extends BaseAdapter {
         viewHolder.tv_seattype.setText((String) data.get(position).get("seattype"));
         viewHolder.tv_ticket.setText((String) data.get(position).get("ticket"));
         viewHolder.tv_price.setText((String)data.get(position).get("price"));
+        viewHolder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(context, TicketBookingActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 

@@ -40,29 +40,6 @@ public class my_detailcontact extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         detailcontact=findViewById(R.id.detailcontact);
         button=findViewById(R.id.btn_myContact);
-//        final String attributes[] = {"姓名", "证件类型", "证件号码", "乘客类型", "电话"};
-//        String values[] = {"东方人", "身份证", "110110199009091111", "成人", "138888888899"};
-
-//        lv1 = findViewById(R.id.lv1);
-//        lv2=findViewById(R.id.lv2);
- //       listCreate(attributes, values, lv1, R.layout.activity_my_contact);
-//        listCreate(attributes,values,lv1,R.layout.detailcontact_list_item);
-        /*   private void listCreate( String attributes[],String values[],ListView lv,int resource){
-        datalist=new ArrayList<HashMap<String, String>>();
-        HashMap<String,String>map;
-        for (int i=0;i<attributes.length;i++) {
-            map = new HashMap<String, String>();
-            map.put("attribute", attributes[i]);
-            map.put("value", values[i]);
-            datalist.add(map);
-        }
-        adapter=new MyAdapter(my_detailcontact.this,datalist,resource,
-                new String[]{"attribute","value"},
-                new int[]{R.id.attribute,R.id.value});
-        lv.setAdapter(adapter);
-    }
-
-  */
         Map<String,Object> contact = (HashMap<String, Object>) getIntent().getSerializableExtra("info");
 
         data = new ArrayList<Map<String, Object>>();

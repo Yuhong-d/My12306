@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> list;
+    private int mChildCount = 0;
     public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> list) {
         super(fm);
         this.list = list;

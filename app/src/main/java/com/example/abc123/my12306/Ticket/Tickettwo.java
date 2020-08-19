@@ -48,16 +48,32 @@ public class Tickettwo extends AppCompatActivity {
         map1.put("ticket","39张");
         map1.put("price","￥154.0");
         list.add(map1);
+        Map<String,Object> map2 = new HashMap<>();
+        map2.put("seattype","硬座");
+        map2.put("ticket","38张");
+        map2.put("price","￥152.0");
+        list.add(map2);
+        Map<String,Object> map3 = new HashMap<>();
+        map3.put("seattype","软卧");
+        map3.put("ticket","48张");
+        map3.put("price","￥215.0");
+        list.add(map3);
+        Map<String,Object> map4 = new HashMap<>();
+        map4.put("seattype","一等座");
+        map4.put("ticket","17张");
+        map4.put("price","￥269.0");
+        list.add(map4);
         Ticketadapter ticketadapter = new Ticketadapter(this,list);
         listView.setAdapter(ticketadapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent();
-                intent.setClass(Tickettwo.this,AddUserInfo.class);
-                startActivity(intent);
-            }
-        });
+        //给此处的listview设置item点击事件不会起作用，原因是控件中包含了button，获取焦点，导致item无法获取焦点或焦点失效
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent=new Intent();
+//                intent.setClass(Tickettwo.this,TicketBookingActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         tv=findViewById(R.id.textView5);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override

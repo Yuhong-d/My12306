@@ -25,6 +25,8 @@
         android:layout_marginBottom="144dp"
         android:text="退出登录"
         android:textSize="25dp"
+        android:textColor="@color/white"
+        android:background="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

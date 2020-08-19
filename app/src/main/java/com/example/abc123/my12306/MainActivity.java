@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
                     String user = et_number.getText().toString().trim();
                     String pswd = et_password.getText().toString().trim();
                     if (judge() && user.equals(myname) && pswd.equals(mypwd)) {
-                        startActivity(new Intent(MainActivity.this, ViewPagerActivity.class));
+                        Intent intent=new Intent(MainActivity.this, ViewPagerActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }else{
                         Toast.makeText(MainActivity.this, "密码或用户名出现错误",
                                 Toast.LENGTH_SHORT).show();
