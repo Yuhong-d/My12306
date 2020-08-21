@@ -97,6 +97,7 @@ public class MyFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent();
                 intent.setClass(getActivity(), my_pwd.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

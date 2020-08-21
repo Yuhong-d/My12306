@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class UserActivity extends AppCompatActivity {
 
     }
     private void layDialog(){
-        AlertDialog.Builder builder=new AlertDialog.Builder(UserActivity.this);
+        final AlertDialog.Builder builder=new AlertDialog.Builder(UserActivity.this);
         //创建view，并将布局加入view中
         View view= LayoutInflater.from(UserActivity.this).inflate(R.layout.number_dialog,null,false);
         //将view加入builder
@@ -63,23 +64,34 @@ public class UserActivity extends AppCompatActivity {
         final Dialog dialog=builder.create();
         //初始化控件
         final EditText edt_number=(EditText) view.findViewById(R.id.edt_number);
-        Button confirm=(Button)view.findViewById(R.id.btnyes);
-        Button cancel=(Button)view.findViewById(R.id.btnno);
-        //设置Button的事件和内容
-        confirm.setOnClickListener(new android.view.View.OnClickListener() {
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
+                //跳转返回后怎样关闭对话框
                 Intent intent=new Intent();
                 intent.setClass(UserActivity.this,my_pwd.class);
                 startActivity(intent);
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 dialog.dismiss();
             }
-        });
+        }).setNegativeButton("取消",null);
+//        Button confirm=(Button)view.findViewById(R.id.btnyes);
+//        final Button cancel=(Button)view.findViewById(R.id.btnno);
+//        //设置Button的事件和内容
+//        confirm.setOnClickListener(new android.view.View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                arg0.dismiss();
+//                Intent intent=new Intent();
+//                intent.setClass(UserActivity.this,my_pwd.class);
+//                startActivity(intent);
+//            }
+//        });
+//        cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
         dialog.show();
     }
 }

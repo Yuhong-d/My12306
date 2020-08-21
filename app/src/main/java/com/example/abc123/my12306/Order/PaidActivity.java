@@ -95,7 +95,7 @@ public class PaidActivity extends AppCompatActivity {
         StringBuffer s=new StringBuffer();
         for (int i=0;i<dataList.size();i++){
             Map<String,String> map=dataList.get(i);
-            s.append(map.get("name")+","+map.get("train")+","+map.get("time")+map.get("carriage"));
+            s.append(map.get("name")+","+map.get("train")+","+map.get("time")+","+map.get("carriage"));
         }
         Bitmap bitmap=createQRCodeBitmap(s.toString(),1000,1000,"UTF-8",
                 "H","1");

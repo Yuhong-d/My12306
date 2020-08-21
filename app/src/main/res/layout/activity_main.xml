@@ -37,7 +37,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/et_number"
+        android:id="@+id/et_usrname"
         android:layout_width="303dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -65,7 +65,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_number" />
+        app:layout_constraintTop_toBottomOf="@+id/et_usrname" />
 
     <TextView
         android:id="@+id/tv_f"

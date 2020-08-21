@@ -44,8 +44,7 @@ public class Myadapter extends BaseAdapter {
         if(convertView == null){
             convertView = LayoutInflater.from(mContext).inflate(R.layout.account_list_itemhis,parent,false);
             holder = new ViewHolder();
-            holder.tv_content= (TextView) convertView.findViewById(R.id.tv_content);
-
+            holder.tv_content= (TextView) convertView.findViewById(R.id.textView);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();

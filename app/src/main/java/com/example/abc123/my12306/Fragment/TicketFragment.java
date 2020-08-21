@@ -81,19 +81,19 @@ public class TicketFragment extends Fragment {
              }
          });
          //待解决
-//         String first=tv_star.getText().toString().trim();
-//         String last=tv_end.getText().toString().trim();
-//         mHistoryKeywords=new ArrayList<String>();
-//         mHistoryKeywords.add(first+"—>"+last);
-//         arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.textView,mHistoryKeywords);
-//         listView.setAdapter(arrayAdapter);
-         mContext=TicketFragment.this;
-         mData=new LinkedList<String>();
          String first=tv_star.getText().toString().trim();
          String last=tv_end.getText().toString().trim();
-         mData.add(first+"——"+last);
-         mAdapter=new Myadapter((LinkedList< String>) mData,mContext);
-         listView.setAdapter(mAdapter);
+         mHistoryKeywords=new ArrayList<String>();
+         mHistoryKeywords.add(first+"—>"+last);
+         arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.textView,mHistoryKeywords);
+         listView.setAdapter(arrayAdapter);
+//         mContext=TicketFragment.this;
+//         mData=new LinkedList<String>();
+//         String first=tv_star.getText().toString().trim();
+//         String last=tv_end.getText().toString().trim();
+//         mData.add(first+"——"+last);
+//         mAdapter=new Myadapter((LinkedList< String>) mData,mContext);
+//         listView.setAdapter(mAdapter);
          //城市导航
          tv_star.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -188,10 +188,10 @@ public class TicketFragment extends Fragment {
         ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.textView,mHistoryKeywords);
         listView.setAdapter(arrayAdapter);
     }
-    private void updateListItem(int postion,Data mData){
-        int visiblePosition = listView.getFirstVisiblePosition();
-        View v =listView.getChildAt(postion - visiblePosition);
-        TextView tv = (TextView) v.findViewById(R.id.tv_content);
-        tv.setText(mData.getContent());
-    }
+//    private void updateListItem(int postion,Data mData){
+//        int visiblePosition = listView.getFirstVisiblePosition();
+//        View v =listView.getChildAt(postion - visiblePosition);
+//        TextView tv = (TextView) v.findViewById(R.id.textView);
+//        tv.setText(mData.getContent());
+//    }
 }
