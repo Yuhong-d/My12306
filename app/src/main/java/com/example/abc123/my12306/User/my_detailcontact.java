@@ -63,7 +63,7 @@ public class my_detailcontact extends AppCompatActivity {
         //String idtype = (String) contact.get("idCard");
         map3.put("key1","证件号码");
         //以冒号进行分割，取第一段
-        map3.put("key2",idtype.split("\\:")[1]);
+        map3.put("key2",idtype.split("\\：")[1]);
         map3.put("key3",R.drawable.flg_null);
         data.add(map3);
 
@@ -77,7 +77,7 @@ public class my_detailcontact extends AppCompatActivity {
         String tel = (String) contact.get("num");
         map5.put("key1","电话");
         //以冒号进行分割，取第二段
-        map5.put("key2",tel.split("\\:")[1]);
+        map5.put("key2",tel.split("\\：")[1]);
         map5.put("key3",R.drawable.forward_25);
         data.add(map5);
 

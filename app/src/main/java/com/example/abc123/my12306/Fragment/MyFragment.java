@@ -63,6 +63,7 @@ public class MyFragment extends Fragment {
                         break;
                     case "我的账户":
                         intent.setClass(getActivity(), my_account.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         break;
                     case "我的密码":

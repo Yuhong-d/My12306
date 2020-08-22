@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,21 +66,23 @@ public class TicketFragment extends Fragment {
         tv_end=view.findViewById(R.id.tv_end);
          tv_texttime=view.findViewById(R.id.texttime);
          tv_time=view.findViewById(R.id.time);
+         Calendar rightNow = Calendar.getInstance();
+         tv_time.setText(rightNow.get(Calendar.YEAR)+"年"+(rightNow.get(Calendar.MONTH)+1)+"月"+rightNow.get(Calendar.DATE)+"日");
          //history=view.findViewById(R.id.his);
          listView=view.findViewById(R.id.listView);
         bt_search=view.findViewById(R.id.bt_search);
         turn = view.findViewById(R.id.turn);
          ImageView turn = getActivity().findViewById(R.id.turn);
          turn.setImageResource(R.drawable.turn);
-         turn.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-              String left=tv_star.getText().toString().trim();
-              String right=tv_end.getText().toString().trim();
-              tv_star.setText("right");
-              tv_end.setText("left");
-             }
-         });
+//         turn.setOnClickListener(new View.OnClickListener() {
+//             @Override
+//             public void onClick(View v) {
+//              String left=tv_star.getText().toString().trim();
+//              String right=tv_end.getText().toString().trim();
+//              tv_star.setText("right");
+//              tv_end.setText("left");
+//             }
+//         });
          //待解决
          String first=tv_star.getText().toString().trim();
          String last=tv_end.getText().toString().trim();
@@ -87,13 +90,6 @@ public class TicketFragment extends Fragment {
          mHistoryKeywords.add(first+"—>"+last);
          arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.textView,mHistoryKeywords);
          listView.setAdapter(arrayAdapter);
-//         mContext=TicketFragment.this;
-//         mData=new LinkedList<String>();
-//         String first=tv_star.getText().toString().trim();
-//         String last=tv_end.getText().toString().trim();
-//         mData.add(first+"——"+last);
-//         mAdapter=new Myadapter((LinkedList< String>) mData,mContext);
-//         listView.setAdapter(mAdapter);
          //城市导航
          tv_star.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -113,24 +109,15 @@ public class TicketFragment extends Fragment {
          turn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-
                  String s1 = tv_star.getText().toString();
                  String s2 = tv_end.getText().toString();
                  tv_star.setText(s2);
                  tv_end.setText(s1);
+                 Log.d("Ticket", "onClick: "+s1+s2);
              }
          });
 
-       bt_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddNewData();
-                arrayAdapter.notifyDataSetChanged();
-                Intent intent = new Intent(getActivity(), Ticketone.class);
-                startActivity(intent);
-            }
-        });
-         tv_texttime.setOnClickListener(new View.OnClickListener() {
+         tv_time.setOnClickListener(new View.OnClickListener() {
              @RequiresApi(api = Build.VERSION_CODES.N)
              @Override
              public void onClick(View v) {
@@ -160,7 +147,11 @@ public class TicketFragment extends Fragment {
          bt_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 String s1 = tv_star.getText().toString();
+                 String s2 = tv_end.getText().toString();
                  Intent intent = new Intent(getActivity(), Ticketone.class);
+                 intent.putExtra("start",s1);
+                 intent.putExtra("end",s2);
                  startActivity(intent);
              }
          });

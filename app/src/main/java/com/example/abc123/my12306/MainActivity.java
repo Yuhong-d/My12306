@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 Intent intent=new Intent(MainActivity.this, ViewPagerActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("sessionId",sessionId);
+                                Log.d(TAG, "session： " + sessionId);
                                 startActivity(intent);
                                 //MainActivity.this.finish();
                             }
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (judge()) {
+                        //检查网络状态
                         if(!NetUtils.check(MainActivity.this)){
                             Toast.makeText(MainActivity.this, "网络异常，请检查！",
                                     Toast.LENGTH_SHORT).show();
@@ -113,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 super.run();
-                                //检查网络状态
                                 Message msg = handler.obtainMessage();
                                 String result = "";
                                 OkHttpClient client = new OkHttpClient();

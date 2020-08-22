@@ -25,7 +25,7 @@ import java.util.Map;
 public class Tickettwo extends AppCompatActivity {
     private ListView listView;
     private List<Map<String,Object>> list;
-    private TextView tv,tv1;
+    private TextView tv,tvTo;
     private TextView preday,afterday,texttime;
     Calendar rightNow = Calendar.getInstance();
     private int cyear = rightNow.get(Calendar.YEAR);
@@ -41,6 +41,9 @@ public class Tickettwo extends AppCompatActivity {
         afterday = findViewById(R.id.afterday);
         texttime = findViewById(R.id.texttime);
         texttime.setText(cyear+"-"+(cmonth+1)+"-"+cdate);
+        tvTo=findViewById(R.id.tvTo);
+        Intent intent=getIntent();
+        tvTo.setText(intent.getStringExtra("start-end"));
         listView = findViewById(R.id.lv_ticketBuy);
         list = new ArrayList<>();
         Map<String,Object> map1 = new HashMap<>();
