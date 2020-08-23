@@ -65,6 +65,8 @@ public class my_addcontact extends AppCompatActivity {
                //     String a = "1";
                     if ("1".equals(msg.obj)){
                         Toast.makeText(my_addcontact.this,"保存成功！",Toast.LENGTH_SHORT).show();
+                   //     Intent intent = new Intent(my_addcontact.this,my_contact.class);
+                    //    startActivity(intent);
                         my_addcontact.this.finish();
 
                     }else {
@@ -221,6 +223,12 @@ public class my_addcontact extends AppCompatActivity {
 
                                     }
                                 })
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int i) {
+                                        DialogUtils.setClosable(dialog,true);
+                                    }
+                                })
                                 .create()
                                 .show();
                         break;
@@ -281,7 +289,7 @@ public class my_addcontact extends AppCompatActivity {
                                 .add("action","new")
                                 .build();
                         Request request = new Request.Builder()
-                                .url("http://192.168.1.3:8080/My12306/otn/Passenger")
+                                .url("http://10.0.2.2:8080/My12306/otn/Passenger")
                                 .addHeader("cookie", sessionId)
                                 .post(requestBody)
                                 .build();

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +50,7 @@ public class my_detailcontact extends AppCompatActivity {
     private Button button;
     private SharedPreferences sp;
     private SimpleAdapter adapter;
-    private String action = "";
+//    private String action = "";
     private List<Map<String,Object>> data;
     private Handler handler = new Handler() {
         @Override
@@ -59,6 +60,8 @@ public class my_detailcontact extends AppCompatActivity {
                 case 1:
                     if ("1".equals(result)){
                         Toast.makeText(my_detailcontact.this,"修改成功！",Toast.LENGTH_SHORT).show();
+                     //   Intent intent = new Intent(my_detailcontact.this,my_contact.class);
+                     //   startActivity(intent);
                         my_detailcontact.this.finish();
 
                     }else if ("-1".equals(result)){
@@ -75,6 +78,8 @@ public class my_detailcontact extends AppCompatActivity {
                 case 4:
                     if ("1".equals(result)){
                         Toast.makeText(my_detailcontact.this,"删除成功！",Toast.LENGTH_SHORT).show();
+                     //   Intent intent = new Intent(my_detailcontact.this,my_contact.class);
+                    //    startActivity(intent);
                         my_detailcontact.this.finish();
 
                     }else if ("-1".equals(result)){
@@ -111,15 +116,15 @@ public class my_detailcontact extends AppCompatActivity {
         String idtype = (String) contact.get("idcard");
         map2.put("key1","证件类型");
         //以冒号进行分割，取第一段
-        map2.put("key2",idtype.split("\\:")[0]);
+        map2.put("key2",idtype.split("\\：")[0]);
         map2.put("key3",R.drawable.flg_null);
         data.add(map2);
 
         Map<String,Object> map3 = new HashMap<>();
         //String idtype = (String) contact.get("idCard");
         map3.put("key1","证件号码");
-        //以冒号进行分割，取第一段
-        map3.put("key2",idtype.split("\\:")[0]);
+        //以冒号进行分割，取第二段
+        map3.put("key2",idtype.split("\\：")[1]);
         map3.put("key3",R.drawable.flg_null);
         data.add(map3);
 
@@ -133,7 +138,7 @@ public class my_detailcontact extends AppCompatActivity {
         String tel = (String) contact.get("num");
         map5.put("key1","电话");
         //以冒号进行分割，取第二段
-        map5.put("key2",tel.split("\\：")[0]);
+        map5.put("key2",tel.split("\\：")[1]);
         map5.put("key3",R.drawable.forward_25);
         data.add(map5);
 
@@ -246,7 +251,7 @@ public class my_detailcontact extends AppCompatActivity {
                     @Override
                     public void run() {
                         Message msg = handler.obtainMessage();
-                        action = "update";
+                        String action = "update";
                         OkHttpClient client = new OkHttpClient();
                         //获取sessionId
                         sp=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
@@ -305,7 +310,8 @@ public class my_detailcontact extends AppCompatActivity {
         switch (item.getItemId()){
             //点击后返回
             case android.R.id.home:
-                finish();
+                my_detailcontact.this.finish();
+                break;
             case R.id.delect:
                 //删除此联系人
                 AlertDialog.Builder builder = new AlertDialog.Builder(my_detailcontact.this);
@@ -327,7 +333,7 @@ public class my_detailcontact extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Message message = handler.obtainMessage();
-                                action = "remove";
+                                String action = "remove";
                                 SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Context.MODE_PRIVATE);
                                 String sessionID = sharedPreferences.getString("cookie", "");
                                 try {
@@ -341,7 +347,7 @@ public class my_detailcontact extends AppCompatActivity {
                                             .add("action", action)
                                             .build();
                                     Request request = new Request.Builder()
-                                            .url("http://192.168.1.3:8080/My12306/otn/Passenger")
+                                            .url("http://10.0.2.2:8080/My12306/otn/Passenger")
                                             .addHeader("cookie", sessionID)
                                             .post(requestBody)
                                             .build();

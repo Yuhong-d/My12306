@@ -59,6 +59,7 @@ public class my_contact extends AppCompatActivity {
                             new String[]{"name","idcard","num"},
                             new int[]{ R.id.tvNameContact, R.id.tvIdCardContact, R.id.tvTelContact });
                     listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     break;
                 case 2:
                     Toast.makeText(my_contact.this,"数据错误！",Toast.LENGTH_SHORT).show();
@@ -77,6 +78,9 @@ public class my_contact extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         listView = findViewById(R.id.Lv_detailcontact);
         data =new ArrayList<>();
+
+
+
         if (!NetUtils.check(my_contact.this)) {
             Toast.makeText(my_contact.this, "网络异常，请检查！",
                     Toast.LENGTH_SHORT).show();
@@ -93,13 +97,12 @@ public class my_contact extends AppCompatActivity {
                 String sessionId =sp.getString("cookie","");
                 Log.d(TAG, "session： " + sessionId);
                 //建立请求
-//                RequestBody requestBody=new FormBody.Builder()
-//                        .build();
+                RequestBody requestBody=new FormBody.Builder()
+                        .build();
                 Request request = new Request.Builder()
                         .url("http://10.0.2.2:8080/My12306/otn/PassengerList")
                         .addHeader("cookie", sessionId)
-//                        .post(requestBody)
-                        .get()
+                        .post(requestBody)
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
