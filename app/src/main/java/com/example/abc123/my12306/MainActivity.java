@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.protocol.RequestContent;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
                                 String result = "";
                                 OkHttpClient client = new OkHttpClient();
                                 RequestBody requestBody = new FormBody.Builder()
-                                        .add("username", edtusername.getText().toString()).
-                                                add("password", Md5Utils.MD5(edtpassword.getText().toString())).
-                                                build();
+                                        .add("username", edtusername.getText().toString())
+                                        .add("password", Md5Utils.MD5(edtpassword.getText().toString()))
+                                        .build();
                                 Request request = new Request.Builder()
-                                        .url("http://10.0.2.2:8080/My12306/Login ").post(requestBody).build();
+                                        .url("http://192.168.1.3:8080/My12306/Login ").post(requestBody).build();
                                 try {
                                     Response response = client.newCall(request).execute();
                                     String responseData = response.body().string();

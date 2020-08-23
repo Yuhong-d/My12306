@@ -5,10 +5,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,18 +24,61 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.abc123.my12306.Fragment.MyFragment;
 import com.example.abc123.my12306.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class my_addcontact extends AppCompatActivity {
+    private static final String TAG = "addContact";
     private ListView listView;
     private Button button;
     private SimpleAdapter adapter;
     private List<HashMap<String, Object>> data;
+    private SharedPreferences sp;
+    private  Handler handler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            Log.d(TAG, "msg的数据： "+msg);
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    String result = msg.obj.toString();
+                   // Log.d(TAG, "result的数据： "+result);
+               //     String a = "1";
+                    if ("1".equals(msg.obj)){
+                        Toast.makeText(my_addcontact.this,"保存成功！",Toast.LENGTH_SHORT).show();
+                        my_addcontact.this.finish();
+
+                    }else {
+                        Toast.makeText(my_addcontact.this,"保存失败！",Toast.LENGTH_SHORT).show();
+                        my_addcontact.this.finish();
+                    }
+                    break;
+                case 2:
+                    Toast.makeText(my_addcontact.this,"数据错误！",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +89,8 @@ public class my_addcontact extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         button=findViewById(R.id.btn_save);
+
+
 
         data = new ArrayList<HashMap<String, Object>>();
         HashMap<String, Object> map;
@@ -56,6 +106,9 @@ public class my_addcontact extends AppCompatActivity {
                 new String[]{"name","value"},
                 new int[]{R.id.attribute,R.id.value});
         listView.setAdapter(adapter);
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -208,43 +261,58 @@ public class my_addcontact extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                       // super.run();
+                        Message msg = handler.obtainMessage();
+                        OkHttpClient client = new OkHttpClient();
+                        //获取sessionId
+                        sp=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                        String sessionId =sp.getString("cookie","");
+                        Log.d(TAG, "session： " + sessionId);
+                        //建立请求
+                        RequestBody requestBody=new FormBody.Builder()
+                                .add("姓名",data.get(0).get("value").toString())
+                                .add("证件类型",data.get(1).get("value").toString())
+                                .add("证件号码",data.get(2).get("value").toString())
+                                .add("乘客类型",data.get(3).get("value").toString())
+                                .add("电话",data.get(4).get("value").toString())
+                                .add("action","new")
+                                .build();
+                        Request request = new Request.Builder()
+                                .url("http://192.168.1.3:8080/My12306/otn/Passenger")
+                                .addHeader("cookie", sessionId)
+                                .post(requestBody)
+                                .build();
+                        try {
+                            Response response = client.newCall(request).execute();
+                            String responsedata = response.body().string();
+                            Log.d(TAG, "获取的服务器数据： "+responsedata);
+                            if (response.isSuccessful()) {
+
+                            //    JSONObject jsonObject=new JSONObject(responsedata);
+                                Gson gson = new GsonBuilder().create();
+                                String resultString = gson.fromJson(responsedata, String.class);
+                                msg.obj = resultString;
+                                msg.what = 1;
+                            }else{
+                                msg.what=2;
+                            }
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                            msg.what=2;
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                            msg.what=3;
+                        }
+                        handler.sendMessage(msg);
+                    }
+                }.start();
 
             }
         });
     }
-  /*  public void nameDialog(){
-        final EditText editTel = new EditText(this);
-        editTel.setText((String) data.get(position).get("value"));
-        new AlertDialog.Builder(MyAccountActivity.this)
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setTitle("请输入电话号码")
-                .setView(editTel)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int witch) {
-                        String newTel = editTel.getText().toString();
-                        if(TextUtils.isEmpty(newTel)){
-                            nameDialog().setClosable(dialog,false);
-                            editTel.setError("请输入电话号码");
-                            editTel.requestFocus();
-                        }else{
-                            DialogUtils.setClosable(dialog,true);
-                            data.get(i).put("value",newTel);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        DialogUtils.setClosable(dialog,true);
-                    }
-                })
-                .create()
-                .show();
-    }
-
-   */
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
@@ -262,32 +330,4 @@ public class my_addcontact extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-   /*     data =new ArrayList<>();
-        Map<String,Object> row1 = new HashMap<>();
-        row1.put("name", "姓名");
-        data.add(row1);
-        Map<String,Object> row2 = new HashMap<>();
-        row2.put("idCardtype", "证件类型");
-        data.add(row2);
-        Map<String,Object> row3 = new HashMap<>();
-        row3.put("idcard", "证件号吗");
-        data.add(row3);
-        Map<String,Object> row4 = new HashMap<>();
-        row4.put("passeagertype", "乘客类型");
-        data.add(row4);
-        Map<String,Object> row5 = new HashMap<>();
-        row5.put("tel", "电话");
-        data.add(row5);
-        adapter = new SimpleAdapter(this,data,R.layout.account_list_item_addcontact,new String[]{"name","idCardtype","idcard","passeagertype","tel"},
-                new int[]{ R.id.attribute});
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //每一行都要弹对话框
-            }
-        });
-        }
-
-    */
 
