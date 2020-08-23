@@ -26,10 +26,6 @@ import android.widget.Toast;
 
 import com.example.abc123.my12306.NetUtils;
 import com.example.abc123.my12306.R;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,25 +43,7 @@ public class my_contact extends AppCompatActivity {
     private ListView listView;
     private SimpleAdapter adapter;
     private List<Map<String,Object>> data;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            //super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
-                    adapter = new SimpleAdapter(my_contact.this,
-                            data,
-                            R.layout.account_list_item,
-                            new String[]{"name","idcard","num"},
-                            new int[]{ R.id.tvNameContact, R.id.tvIdCardContact, R.id.tvTelContact });
-                    listView.setAdapter(adapter);
-                    break;
-                case 2:
-                    Toast.makeText(my_contact.this,"数据错误！",Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
+    private Handler handler;
     private SharedPreferences sp;
 
     @Override
@@ -73,10 +51,29 @@ public class my_contact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_contact);
         //返回按钮
-        final ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         listView = findViewById(R.id.Lv_detailcontact);
         data =new ArrayList<>();
+        handler=new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        adapter = new SimpleAdapter(my_contact.this,
+                                data,
+                                R.layout.account_list_item,
+                                new String[]{"name","idcard","num"},
+                                new int[]{ R.id.tvNameContact, R.id.tvIdCardContact, R.id.tvTelContact });
+                        listView.setAdapter(adapter);
+                        break;
+                    case 2:
+                        Toast.makeText(my_contact.this,"数据错误！",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
         if (!NetUtils.check(my_contact.this)) {
             Toast.makeText(my_contact.this, "网络异常，请检查！",
                     Toast.LENGTH_SHORT).show();
@@ -93,38 +90,31 @@ public class my_contact extends AppCompatActivity {
                 String sessionId =sp.getString("cookie","");
                 Log.d(TAG, "session： " + sessionId);
                 //建立请求
-//                RequestBody requestBody=new FormBody.Builder()
-//                        .build();
+                RequestBody requestBody=new FormBody.Builder()
+                        .build();
                 Request request = new Request.Builder()
                         .url("http://10.0.2.2:8080/My12306/otn/PassengerList")
-                        .addHeader("cookie", sessionId)
-//                        .post(requestBody)
-                        .get()
-                        .build();
+                        .addHeader("cookie", sessionId) .post(requestBody).build();
                 try {
                     Response response = client.newCall(request).execute();
-                    Log.d(TAG, "response"+response);
                     if (response.isSuccessful()) {
                         String responsedata = response.body().string();
-                        Log.d(TAG, "responseData"+responsedata);
                         JSONArray jsonArray = new JSONArray(responsedata);
                         Map<String, Object> map = new HashMap<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
                             map = new HashMap<String, Object>();
                             String type=obj.getString("type");
-                            String idType=obj.getString("idType");
                             map.put("name", obj.get("name")+"("+type+")");
+                            String idType=obj.getString("idType");
                             map.put("idcard",idType+"："+obj.get("id"));
                             map.put("num", "电话："+obj.get("tel"));
                             data.add(map);
                         }
-                        msg.what=1;
-                    }
-                    else{
+                        msg.what = 1;
+                    }else{
                         msg.what=2;
                     }
-
                 }catch (IOException e) {
                     e.printStackTrace();
                     msg.what=2;
