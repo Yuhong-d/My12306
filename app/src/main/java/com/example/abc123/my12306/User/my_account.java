@@ -82,9 +82,9 @@ public class my_account extends AppCompatActivity {
         //保存按钮事件
         handler1=new Handler(){
             @Override
-            public void handleMessage(@NonNull Message msg2) {
-                super.handleMessage(msg2);
-                switch (msg2.what){
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
                     case 1:
                         Toast.makeText(my_account.this,"已保存",Toast.LENGTH_SHORT).show();
                         break;
@@ -226,11 +226,8 @@ public class my_account extends AppCompatActivity {
                         String sessionId =sp.getString("cookie","");
                         //建立请求
                         RequestBody requestBody=new FormBody.Builder()
-                                .add("姓名", datalist.get(0).get("value"))
-                                .add("证件类型", datalist.get(1).get("value"))
-                                .add("证件号码", datalist.get(2).get("value"))
-                                .add("乘客类型",datalist.get(3).get("value"))
-                                .add("电话",datalist.get(4).get("value"))
+                                .add("乘客类型",datalist.get(4).get("value"))
+                                .add("电话",datalist.get(5).get("value"))
                                 .add("action","update")
                                 .build();
                         Request request=new Request.Builder().
@@ -244,8 +241,8 @@ public class my_account extends AppCompatActivity {
                                 String responsedata=response.body().string();
                                 Log.d(TAG, "run: "+responsedata);
                                 JSONObject object=new JSONObject(responsedata);
-                               // String type=object.getString("type");
-                               // String tel=object.getString("tel");
+                                String type=object.getString("type");
+                                String tel=object.getString("tel");
                                 Log.d(TAG, "run: "+datalist.get(4).get("value"));
                                 msg2.what=1;
                             }else {

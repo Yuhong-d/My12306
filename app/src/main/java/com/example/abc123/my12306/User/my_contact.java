@@ -44,6 +44,7 @@ import java.util.Map;
 
 public class my_contact extends AppCompatActivity {
     private static final String TAG = "Contact";
+    public static my_contact instance = null;
     private ListView listView;
     private SimpleAdapter adapter;
     private List<Map<String,Object>> data;
@@ -59,7 +60,6 @@ public class my_contact extends AppCompatActivity {
                             new String[]{"name","idcard","num"},
                             new int[]{ R.id.tvNameContact, R.id.tvIdCardContact, R.id.tvTelContact });
                     listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                     break;
                 case 2:
                     Toast.makeText(my_contact.this,"数据错误！",Toast.LENGTH_SHORT).show();
@@ -74,13 +74,11 @@ public class my_contact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_contact);
         //返回按钮
+        instance=this;
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         listView = findViewById(R.id.Lv_detailcontact);
         data =new ArrayList<>();
-
-
-
         if (!NetUtils.check(my_contact.this)) {
             Toast.makeText(my_contact.this, "网络异常，请检查！",
                     Toast.LENGTH_SHORT).show();
@@ -97,12 +95,13 @@ public class my_contact extends AppCompatActivity {
                 String sessionId =sp.getString("cookie","");
                 Log.d(TAG, "session： " + sessionId);
                 //建立请求
-                RequestBody requestBody=new FormBody.Builder()
-                        .build();
+//                RequestBody requestBody=new FormBody.Builder()
+//                        .build();
                 Request request = new Request.Builder()
                         .url("http://10.0.2.2:8080/My12306/otn/PassengerList")
                         .addHeader("cookie", sessionId)
-                        .post(requestBody)
+//                        .post(requestBody)
+                        .get()
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
@@ -145,6 +144,7 @@ public class my_contact extends AppCompatActivity {
                 intent.setClass(my_contact.this,my_detailcontact.class);
                 intent.putExtra("info", (Serializable) data.get(position));
                 startActivity(intent);
+//                my_contact.this.finish();
             }
         });
     }
@@ -165,6 +165,7 @@ public class my_contact extends AppCompatActivity {
             case R.id.add:
                 //跳转到添加页面
                 Intent intent = new Intent(my_contact.this,my_addcontact.class);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
         }

@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.util.Constant;
-import com.example.abc123.my12306.util.NetUtils;
+import com.example.abc123.my12306.NetUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +50,7 @@ public class my_detailcontact extends AppCompatActivity {
     private Button button;
     private SharedPreferences sp;
     private SimpleAdapter adapter;
-//    private String action = "";
+    private String action = "";
     private List<Map<String,Object>> data;
     private Handler handler = new Handler() {
         @Override
@@ -60,8 +60,9 @@ public class my_detailcontact extends AppCompatActivity {
                 case 1:
                     if ("1".equals(result)){
                         Toast.makeText(my_detailcontact.this,"修改成功！",Toast.LENGTH_SHORT).show();
-                     //   Intent intent = new Intent(my_detailcontact.this,my_contact.class);
-                     //   startActivity(intent);
+                        my_contact.instance.finish();
+                        Intent intent=new Intent(my_detailcontact.this,my_contact.class);
+                        startActivity(intent);
                         my_detailcontact.this.finish();
 
                     }else if ("-1".equals(result)){
@@ -78,8 +79,9 @@ public class my_detailcontact extends AppCompatActivity {
                 case 4:
                     if ("1".equals(result)){
                         Toast.makeText(my_detailcontact.this,"删除成功！",Toast.LENGTH_SHORT).show();
-                     //   Intent intent = new Intent(my_detailcontact.this,my_contact.class);
-                    //    startActivity(intent);
+                        my_contact.instance.finish();
+                        Intent intent=new Intent(my_detailcontact.this,my_contact.class);
+                        startActivity(intent);
                         my_detailcontact.this.finish();
 
                     }else if ("-1".equals(result)){
@@ -123,7 +125,7 @@ public class my_detailcontact extends AppCompatActivity {
         Map<String,Object> map3 = new HashMap<>();
         //String idtype = (String) contact.get("idCard");
         map3.put("key1","证件号码");
-        //以冒号进行分割，取第二段
+        //以冒号进行分割，取第一段
         map3.put("key2",idtype.split("\\：")[1]);
         map3.put("key3",R.drawable.flg_null);
         data.add(map3);
@@ -251,7 +253,7 @@ public class my_detailcontact extends AppCompatActivity {
                     @Override
                     public void run() {
                         Message msg = handler.obtainMessage();
-                        String action = "update";
+                        action = "update";
                         OkHttpClient client = new OkHttpClient();
                         //获取sessionId
                         sp=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
@@ -310,7 +312,7 @@ public class my_detailcontact extends AppCompatActivity {
         switch (item.getItemId()){
             //点击后返回
             case android.R.id.home:
-                my_detailcontact.this.finish();
+                finish();
                 break;
             case R.id.delect:
                 //删除此联系人
@@ -333,7 +335,7 @@ public class my_detailcontact extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Message message = handler.obtainMessage();
-                                String action = "remove";
+                                action = "remove";
                                 SharedPreferences sharedPreferences = getSharedPreferences("userinfo", Context.MODE_PRIVATE);
                                 String sessionID = sharedPreferences.getString("cookie", "");
                                 try {
