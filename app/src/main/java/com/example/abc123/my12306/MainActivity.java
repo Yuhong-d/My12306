@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.protocol.RequestContent;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -37,7 +37,6 @@ import java.io.StringReader;
 import java.lang.invoke.ConstantCallSite;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -120,15 +119,13 @@ public class MainActivity extends AppCompatActivity {
                                 Message msg = handler.obtainMessage();
                                 String result = "";
                                 OkHttpClient client = new OkHttpClient();
-
                                 RequestBody requestBody = new FormBody.Builder()
-                                        .add("username", edtusername.getText().toString()).
-                                                add("password", Md5Utils.MD5(edtpassword.getText().toString())).
-                                                build();
+                                        .add("username", edtusername.getText().toString())
+                                        .add("password", Md5Utils.MD5(edtpassword.getText().toString()))
+                                        .build();
                                 Request request = new Request.Builder()
-                                        .url("http://10.0.2.2:8080/My12306/Login ").post(requestBody).build();
+                                        .url("http://192.168.1.3:8080/My12306/Login ").post(requestBody).build();
                                 try {
-                                    //未开启tomcat前如何在页面上显示错误
                                     Response response = client.newCall(request).execute();
                                     String responseData = response.body().string();
                                     Log.d(TAG, "获取的服务器数据： "+responseData);
@@ -160,10 +157,7 @@ public class MainActivity extends AppCompatActivity {
                                     } else {
                                         msg.what = 2;
                                     }
-                                } catch (SocketTimeoutException e){
-                                    e.printStackTrace();
-                                    msg.what=2;
-                                } catch (IOException e) {
+                                }catch (IOException e) {
                                     e.printStackTrace();
                                     msg.what=2;
                                 } catch (XmlPullParserException e) {
