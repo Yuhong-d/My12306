@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.abc123.my12306.NetUtils;
 import com.example.abc123.my12306.R;
+import com.example.abc123.my12306.SearchListDbOperation;
 import com.example.abc123.my12306.Ticket.CityActivity;
 import com.example.abc123.my12306.Ticket.Ticketone;
 import com.example.abc123.my12306.User.my_contact;
@@ -122,7 +123,6 @@ public class TicketFragment extends Fragment {
          tv_time=view.findViewById(R.id.time);
          Calendar rightNow = Calendar.getInstance();
          tv_time.setText(rightNow.get(Calendar.YEAR)+"-"+(rightNow.get(Calendar.MONTH)+1)+"-"+rightNow.get(Calendar.DATE));
-         //history=view.findViewById(R.id.his);
          listView=view.findViewById(R.id.listView);
         bt_search=view.findViewById(R.id.bt_search);
         turn = view.findViewById(R.id.turn);
@@ -228,11 +228,14 @@ public class TicketFragment extends Fragment {
          bt_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                 final String first=tv_star.getText().toString().trim();
+                 final String last=tv_end.getText().toString().trim();
+                 String record=first+"->"+last;
                 //删除表
                 //判断数据库中是否存在该记录
                 if (!searchListDbOperation.isHasRecord(record)) {
                     tempList.add(record);
-                }
+                }//新数据与旧数据相同时无法显示
 //                searchListDbOperation.deleteAllRecords();
                 //将搜索记录保存至数据库中
                 searchListDbOperation.addRecords(record);
@@ -367,7 +370,6 @@ public class TicketFragment extends Fragment {
         searchRecordsList.clear();
         for(int i = tempList.size() - 1 ; i >= 0 ; i --){
             searchRecordsList.add(tempList.get(i));
-
         }
         String[] seplace={searchRecordsList.get(0),searchRecordsList.get(1)};
         arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.historytv,seplace);

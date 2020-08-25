@@ -64,30 +64,6 @@ public class TicketBookingActivity extends AppCompatActivity {
         tvSeat.setText(intent.getStringExtra("seat")+"("+intent.getStringExtra("ticketNum")+"张)");
         tvPrice.setText(intent.getStringExtra("price"));
         listView=findViewById(R.id.ls);
-        /*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(TicketBookingActivity.this);
-                builder.setTitle("提醒！");
-                builder.setMessage("确定要删除该乘客吗？");
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        data.remove(position);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
-
-         */
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int j, long id) {
@@ -189,30 +165,6 @@ public class TicketBookingActivity extends AppCompatActivity {
                     viewHodler.tv3.setText(datalist.get(position).get("num").toString());
                     viewHodler.cbx_addusr.setVisibility(View.GONE);
                     viewHodler.img.setImageResource(R.drawable.cancel_25);
-                    /*
-                    viewHodler.tv1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(TicketBookingActivity.this);
-                            builder.setTitle("提醒！");
-                            builder.setMessage("确定要删除该乘客吗？");
-                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    data.remove(position);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
-                        }
-                    });
-
-                     */
                     viewHodler.tv1.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {

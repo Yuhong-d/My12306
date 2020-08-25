@@ -39,6 +39,7 @@ public class SearchListDbOperation {
         Cursor cursor = recordsDb.query(tableName, null, null, null, null, null, null);
         while (cursor.moveToNext()) {
             if (record.equals(cursor.getString(cursor.getColumnIndexOrThrow("placename")))) {
+
                 isHasRecord = true;
             }
         }
