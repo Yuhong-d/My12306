@@ -62,12 +62,14 @@ public class Tickettwo extends AppCompatActivity {
         afterday = findViewById(R.id.afterday);
         texttime = findViewById(R.id.texttime);
         tvTo=findViewById(R.id.tvTo);
+
         Intent intent=getIntent();
         tvTo.setText(intent.getStringExtra("start-end"));
         texttime.setText(intent.getStringExtra("time"));
         listView = findViewById(R.id.lv_ticketBuy);
         list= (List<Map<String, Object>>) intent.getSerializableExtra("list");
         int key=intent.getIntExtra("trainNo",1);
+
         final ArrayList<Map<String,Object>> data = new ArrayList<>();
         final Map<String,Object> map=list.get(key);
         int len= (int) (map.size()*0.5-1);
