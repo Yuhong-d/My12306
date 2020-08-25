@@ -228,6 +228,9 @@ public class TicketFragment extends Fragment {
          bt_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
+                final String first=tv_star.getText().toString().trim();
+                final String last=tv_end.getText().toString().trim();
+                String record=first+"->"+last;
                 //删除表
                 //判断数据库中是否存在该记录
                 if (!searchListDbOperation.isHasRecord(record)) {
