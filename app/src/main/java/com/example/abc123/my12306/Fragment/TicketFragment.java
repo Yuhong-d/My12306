@@ -70,7 +70,7 @@ public class TicketFragment extends Fragment {
     private ListView listView;
     private ArrayAdapter<String> mArrAdapter;
     private List<String> mHistoryKeywords;
-    private SharedPreferences sp;
+    private SharedPreferences sp;//记录时间，地点等
     private SharedPreferences.Editor editor;
     private ImageView turn;
     private ArrayAdapter<String> arrayAdapter;
@@ -78,7 +78,8 @@ public class TicketFragment extends Fragment {
     private List<String> mData;
     private TicketFragment mContext;
     private SharedPreferences sp2;
-    private ArrayList<Map<String,String>> tansData;
+    private ArrayList<Map<String,String>> tansData;//ticketone的数据
+    private ArrayList<Map<String,Object>> tansData2;//tickettwo的数据
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -90,6 +91,7 @@ public class TicketFragment extends Fragment {
                     String s2 = tv_end.getText().toString();
                     intent.putExtra("start",s1);
                     intent.putExtra("end",s2);
+                    intent.putExtra("time",tv_time.getText().toString().split(" ")[0]);
                     intent.putExtra("list",tansData);
                     startActivity(intent);
                     break;
@@ -223,7 +225,7 @@ public class TicketFragment extends Fragment {
              }
 
          });
-         //无法刷新数据
+         //查询按钮点击事件
          bt_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -262,8 +264,8 @@ public class TicketFragment extends Fragment {
                                  Log.d(TAG, "responsedata: "+responsedata);
                                  Log.d(TAG, "run: "+response.code());
                                  //解析数据，json
-                                 tansData=new ArrayList<>();
-
+                                 tansData=new ArrayList<>();//查询结果
+                                 tansData2=new ArrayList<>();//列车详情
                                  JSONArray jsonArray1=new JSONArray(responsedata);
 
                                  for (int i=0;i<jsonArray1.length();i++){
@@ -273,6 +275,7 @@ public class TicketFragment extends Fragment {
                                      map.put("tv_start",obj1.getString("startTime"));
                                      String dayDifference=obj1.getString("dayDifference");
                                      map.put("tv_end",obj1.getString("arriveTime")+"("+dayDifference+"日)");
+                                     map.put("durationTime",obj1.getString("durationTime"));
                                      JSONObject obj2= (JSONObject) obj1.get("seats");
                                      //通过迭代器获取这段json当中所有的key值
                                      Iterator keys = obj2.keys();
@@ -283,22 +286,23 @@ public class TicketFragment extends Fragment {
                                          String key = String.valueOf(keys.next());
                                          //最后就可以通过刚刚得到的key值去解析后面的json了
                                          JSONObject object1=obj2.getJSONObject(key);
-                                        switch (m){
+                                         num=object1.getString("seatNum");
+                                            switch (m){
                                             case 1:
-                                                num=object1.getString("seatNum");;
                                                 map.put("seat1",object1.getString("seatName")+":"+num);
+                                                map.put("price1",object1.getString("seatPrice"));
                                                 break;
                                             case 2:
-                                                num=object1.getString("seatNum");;
                                                 map.put("seat2",object1.getString("seatName")+":"+num);
+                                                map.put("price2",object1.getString("seatPrice"));
                                                 break;
                                             case 3:
-                                                num=object1.getString("seatNum");;
                                                 map.put("seat3",object1.getString("seatName")+":"+num);
+                                                map.put("price3",object1.getString("seatPrice"));
                                                 break;
                                             case 4:
-                                                num=object1.getString("seatNum");;
                                                 map.put("seat4",object1.getString("seatName")+":"+num);
+                                                map.put("price4",object1.getString("seatPrice"));
                                                 break;
                                          }
                                          m++;

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.Ticket.adpter.TickettwoAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class Ticketone extends AppCompatActivity {
         Intent intent=getIntent();
         tvTo.setText(intent.getStringExtra("start")+"-->"+intent.getStringExtra("end"));
         list= (List<Map<String, String>>) intent.getSerializableExtra("list");
-        texttime.setText(cyear+"-"+(cmonth+1)+"-"+cdate);
+        texttime.setText(intent.getStringExtra("time"));
         listView = findViewById(R.id.lv_ticket);
         TickettwoAdapter tickettwoAdapter = new TickettwoAdapter(this,list);
         listView.setAdapter(tickettwoAdapter);
@@ -53,6 +54,9 @@ public class Ticketone extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(Ticketone.this, Tickettwo.class);
                 intent.putExtra("start-end",tvTo.getText().toString());
+                intent.putExtra("trainNo",position);
+                intent.putExtra("time",texttime.getText().toString());
+                intent.putExtra("list", (Serializable) list);
                 startActivity(intent);
             }
         });
