@@ -7,109 +7,105 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
-            android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/starpl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginTop="20dp"
+                android:text="北京"
+                android:textAlignment="center"
+                android:textColor="@color/dark"
+                android:textSize="23sp" />
 
-                <TextView
-                    android:id="@+id/starpl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="北京"
-                    android:textSize="23sp"
-                    android:textColor="@color/dark"
-                    android:layout_marginTop="20dp"
-                    android:textAlignment="center"/>
-
-                <TextView
-                    android:id="@+id/startime"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="7:00"
-                    android:textSize="20sp"
-                    android:textAlignment="center"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/ticknum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="D5"
-                    android:textSize="23sp"
-                    android:textColor="@color/dark"/>
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="194dp"
-                    android:layout_height="33dp"
-                    app:srcCompat="@drawable/to" />
-
-                <TextView
-                    android:id="@+id/ticktime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="2014-7-1（0日）"
-                    android:textSize="23sp"
-                    android:textColor="@color/dark"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/endpl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="上海"
-                    android:textSize="23sp"
-                    android:textColor="@color/dark"
-                    android:layout_marginTop="20dp"
-                    android:textAlignment="center"/>
-
-                <TextView
-                    android:id="@+id/endtime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="11:00"
-                    android:textSize="20sp"
-                    android:textAlignment="center"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/startime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="7:00"
+                android:textAlignment="center"
+                android:textSize="20sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ticknum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="D5"
+                android:textColor="@color/dark"
+                android:textSize="23sp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="194dp"
+                android:layout_height="33dp"
+                app:srcCompat="@drawable/to" />
+
+            <TextView
+                android:id="@+id/ticktime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="2014-7-1（0日）"
+                android:textColor="@color/dark"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/endpl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="上海"
+                android:textAlignment="center"
+                android:textColor="@color/dark"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/endtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11:00"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,9 +148,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

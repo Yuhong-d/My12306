@@ -132,10 +132,10 @@ public class Ticketone extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             Log.d("yy", "这里3");
-            progressDialog = ProgressDialog.show(Ticketone.this,
-                    null,
-                    "正在加载中....",
-                    false, true);
+      //      progressDialog = ProgressDialog.show(Ticketone.this,
+       //             null,
+       //             "正在加载中....",
+       //             false, true);
         }
 
         @Override
@@ -188,9 +188,6 @@ public class Ticketone extends AppCompatActivity {
             super.onPostExecute(result);
             System.out.print(result);
             data.clear();
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
             if (result instanceof Train[]) {
                 trains = (Train[]) result;
                 if (trains.length == 0) {

@@ -195,6 +195,7 @@ public class TicketFragment extends Fragment {
          final int oldMonth = oldCalendar.get(Calendar.MONTH);
          final int oldDay = oldCalendar.get(Calendar.DATE);
          String weekDay = DateUtils.formatDateTime(getActivity(),oldCalendar.getTimeInMillis(),DateUtils.FORMAT_SHOW_WEEKDAY);
+         tv_time.setText(oldYear+"-"+(oldMonth+1)+"-"+oldDay+" "+weekDay);
 
 
 
@@ -203,26 +204,26 @@ public class TicketFragment extends Fragment {
              @Override
              public void onClick(View v) {
                  DatePickerDialog dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                     @Override
-                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                         Calendar newCalendar = Calendar.getInstance();
-                         //这个设置就是改成选择的日期，覆盖
-                         newCalendar.set(year,month,dayOfMonth);//里面这个day是你选择的,这样就能星期就在随你点的变了
-                         //newCalendar.getTimeInMillis(),精确到了几号
-                         //  String week = WeekUtils.getWeek(year + "-" + (month + 1) + "-" + dayOfMonth);
-                         String weekDay = DateUtils.formatDateTime(getActivity(),newCalendar.getTimeInMillis(),DateUtils.FORMAT_SHOW_WEEKDAY);
-                         //明明选的10月份，实际你也要加一,有意思,且格式要对，像下面这样
-                         tv_time.setText(year+"-"+(month+1)+"-"+dayOfMonth+" "+weekDay);//系统的月份是从0开始的所以加一
-                     }
-                 },oldYear,oldMonth,oldDay);//这个是默认日历表选中的日期，虽是7但，代表的是8，1.所以月份取出来要加1.
-                 //有时又不加1
+                 @Override
+                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                     Calendar newCalendar = Calendar.getInstance();
+                     //这个设置就是改成选择的日期，覆盖
+                     newCalendar.set(year,month,dayOfMonth);//里面这个day是你选择的,这样就能星期就在随你点的变了
+                     //newCalendar.getTimeInMillis(),精确到了几号
+                     //  String week = WeekUtils.getWeek(year + "-" + (month + 1) + "-" + dayOfMonth);
+                     String weekDay = DateUtils.formatDateTime(getActivity(),newCalendar.getTimeInMillis(),DateUtils.FORMAT_SHOW_WEEKDAY);
+                     //明明选的10月份，实际你也要加一,有意思,且格式要对，像下面这样
+                     tv_time.setText(year+"-"+(month+1)+"-"+dayOfMonth+" "+weekDay);//系统的月份是从0开始的所以加一
+                 }
+             },oldYear,oldMonth,oldDay);//这个是默认日历表选中的日期，虽是7但，代表的是8，1.所以月份取出来要加1.
+             //有时又不加1
                  Log.d("month",""+oldMonth);
                  dpd.setTitle("日期");
-                 long now = System.currentTimeMillis() - 1000;
+             long now = System.currentTimeMillis() - 1000;
                  dpd.getDatePicker().setMaxDate(now+(1000*60*60*24*3));  //设置日期最大值,只能选当前日期后三天
                  dpd.getDatePicker().setMinDate(oldCalendar.getTimeInMillis()); //设置日期最小值,当前日期之前的不能选
                  dpd.show();
-             }
+         }
 
          });
          //查询按钮点击事件
