@@ -79,7 +79,7 @@ public class TicketFragment extends Fragment {
     private TicketFragment mContext;
     private SharedPreferences sp2;
     private ArrayList<Map<String,String>> tansData;
-    private Handler handler=new Handler(){
+  /*  private Handler handler=new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -91,6 +91,7 @@ public class TicketFragment extends Fragment {
                     intent.putExtra("start",s1);
                     intent.putExtra("end",s2);
                     intent.putExtra("list",tansData);
+                    intent.putExtra("startTicketDate",tv_time.getText().toString());
                     startActivity(intent);
                     break;
                 case 2:
@@ -99,6 +100,8 @@ public class TicketFragment extends Fragment {
             }
         }
     };
+
+   */
     public  TicketFragment(){
         //需要空的构造方法
     }
@@ -156,11 +159,6 @@ public class TicketFragment extends Fragment {
          turn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 /*String s1 = tv_star.getText().toString();
-                 String s2 = tv_end.getText().toString();
-                 tv_star.setText(s2);
-                 tv_end.setText(s1);
-                 Log.d("Ticket", "onClick: "+s1+s2);*/
                  stationFrom = tv_star.getText().toString();
                  stationTo = tv_end.getText().toString();
                  TranslateAnimation animationFrom = new TranslateAnimation(0, 650, 0, 0);
@@ -193,7 +191,7 @@ public class TicketFragment extends Fragment {
          final int oldMonth = oldCalendar.get(Calendar.MONTH);
          final int oldDay = oldCalendar.get(Calendar.DATE);
          String weekDay = DateUtils.formatDateTime(getActivity(),oldCalendar.getTimeInMillis(),DateUtils.FORMAT_SHOW_WEEKDAY);
-
+         tv_time.setText(oldYear+"-"+(oldMonth+1)+"-"+oldDay+" "+weekDay);
 
 
          tv_time.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +221,19 @@ public class TicketFragment extends Fragment {
              }
 
          });
+         bt_search.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent();
+                 intent.putExtra("stationFrom",tv_star.getText().toString());
+                 intent.putExtra("stationTo",tv_end.getText().toString());
+                 intent.putExtra("startTicketDate",tv_time.getText().toString());
+                 intent.setClass(getActivity(), Ticketone.class);
+                 startActivity(intent);
+             }
+         });
+
+         /*
          //无法刷新数据
          bt_search.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -273,6 +284,7 @@ public class TicketFragment extends Fragment {
                                      map.put("tv_start",obj1.getString("startTime"));
                                      String dayDifference=obj1.getString("dayDifference");
                                      map.put("tv_end",obj1.getString("arriveTime")+"("+dayDifference+"日)");
+                                     map.put("durationTime",obj1.getString("durationTime"));
                                      JSONObject obj2= (JSONObject) obj1.get("seats");
                                      //通过迭代器获取这段json当中所有的key值
                                      Iterator keys = obj2.keys();
@@ -283,23 +295,24 @@ public class TicketFragment extends Fragment {
                                          String key = String.valueOf(keys.next());
                                          //最后就可以通过刚刚得到的key值去解析后面的json了
                                          JSONObject object1=obj2.getJSONObject(key);
-                                        switch (m){
-                                            case 1:
-                                                num=object1.getString("seatNum");;
-                                                map.put("seat1",object1.getString("seatName")+":"+num);
-                                                break;
-                                            case 2:
-                                                num=object1.getString("seatNum");;
-                                                map.put("seat2",object1.getString("seatName")+":"+num);
-                                                break;
-                                            case 3:
-                                                num=object1.getString("seatNum");;
-                                                map.put("seat3",object1.getString("seatName")+":"+num);
-                                                break;
-                                            case 4:
-                                                num=object1.getString("seatNum");;
-                                                map.put("seat4",object1.getString("seatName")+":"+num);
-                                                break;
+                                         num=object1.getString("seatNum");
+                                         switch (m){
+                                             case 1:
+                                                 map.put("seat1",object1.getString("seatName")+":"+num);
+                                                 map.put("price1",object1.getString("seatPrice"));
+                                                 break;
+                                             case 2:
+                                                 map.put("seat2",object1.getString("seatName")+":"+num);
+                                                 map.put("price2",object1.getString("seatPrice"));
+                                                 break;
+                                             case 3:
+                                                 map.put("seat3",object1.getString("seatName")+":"+num);
+                                                 map.put("price3",object1.getString("seatPrice"));
+                                                 break;
+                                             case 4:
+                                                 map.put("seat4",object1.getString("seatName")+":"+num);
+                                                 map.put("price4",object1.getString("seatPrice"));
+                                                 break;
                                          }
                                          m++;
                                          Log.d(TAG, "run: "+m);
@@ -349,7 +362,11 @@ public class TicketFragment extends Fragment {
             String num=object1.getString("seatNum");
             map.put("seat1",object1.getString("seatName")+":"+num);
         }
+
+ */
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
