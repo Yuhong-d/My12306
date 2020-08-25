@@ -74,7 +74,7 @@ public class my_contact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_contact);
         //返回按钮
-        instance=this;
+        instance=this;//页面的instance
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         listView = findViewById(R.id.Lv_detailcontact);

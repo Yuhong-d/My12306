@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     //未开启tomcat前如何在页面上显示错误
                                     Response response = client.newCall(request).execute();
+                                    Log.d(TAG, "response： "+response);
                                     String responseData = response.body().string();
                                     Log.d(TAG, "获取的服务器数据： "+responseData);
                                     if (response.isSuccessful()) {

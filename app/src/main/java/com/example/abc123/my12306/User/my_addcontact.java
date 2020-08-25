@@ -4,16 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +30,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abc123.my12306.Fragment.MyFragment;
+import com.example.abc123.my12306.NetUtils;
 import com.example.abc123.my12306.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,11 +45,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.core.app.ActivityCompat;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -264,6 +276,15 @@ public class my_addcontact extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!NetUtils.check(my_addcontact.this)) {
+                    Toast.makeText(my_addcontact.this, "网络异常，请检查！",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }else if (isContentEmpty()){
+                    Toast.makeText(my_addcontact.this, "请将信息填写完整！",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 new Thread(){
                     @Override
                     public void run() {
@@ -316,6 +337,16 @@ public class my_addcontact extends AppCompatActivity {
             }
         });
     }
+    //判断内容是否填写
+    private boolean isContentEmpty(){
+        for (int i=0;i<data.size();i++){
+            Log.d(TAG, "isContentEmpty: "+data.get(i).get("value").toString());
+            if (data.get(i).get("value").toString().equals("")){
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
@@ -329,8 +360,63 @@ public class my_addcontact extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.id.addcontact:
+                addLayout();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
-}
+    private void addLayout() {
+        int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.READ_CONTACTS);
+        if(hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(my_addcontact.this,new String[] {Manifest.permission.READ_CONTACTS},1);
+            return;
+        }
+        ContentResolver cr = getContentResolver();
+        //获取联系人,ContactsContract.Contacts.CONTENT_URI,
+        Cursor c = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                new String[]{"_id", "display_name"}, null, null, null);
+        String display_name = null;
+        int _id = 0;
+        while (c.moveToNext()) {
+             _id = c.getInt(c.getColumnIndex(ContactsContract.Contacts._ID));
+            display_name = c.getString(c.getColumnIndex("display_name"));
+            Log.d("Addcontact", _id + "," + display_name);
+        }
+        c.close();
+        //获取联系人号码
+        Cursor c2 = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
+                new String[]{_id+""}, null);
+        String number = null;
+        while (c2.moveToNext()) {
+            number = c2.getString(c2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            Log.d(TAG, "addLayout: "+number);
+        }
+        c2.close();
+        AlertDialog.Builder builder = new AlertDialog.Builder(my_addcontact.this)
+                .setNegativeButton("取消", null);
+        View view = LayoutInflater.from(my_addcontact.this).inflate(R.layout.addcontact_dialog, null, false);
+        //将view加入builder
+        builder.setView(view).setTitle("请选择");
+        //创建dialog
+        final Dialog dialog = builder.create();
+        TextView textView = (TextView) view.findViewById(R.id.text);
+        textView.setText(display_name + "(" + number + ")");
+        final String finalDisplay_name = display_name;
+        final String finalNumber = number;
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.setClosable(dialog, true);
+                data.get(0).put("value", finalDisplay_name);
+                data.get(4).put("value", finalNumber);
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+
+        });
+        dialog.show();
+    }
+    }
 

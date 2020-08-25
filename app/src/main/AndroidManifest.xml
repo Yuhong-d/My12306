@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.abc123.my12306">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -12,22 +15,57 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Ticket.PaidSuccessActivity" android:label="支付成功！"></activity>
-        <activity android:name=".Ticket.TicketSubmitActivity" android:label="车票预定"/>
-        <activity android:name=".Ticket.TicketBookingActivity" android:label="车票预定"/>
-        <activity android:name=".Order.PaidActivity" android:label="订单管理"/>
-        <activity android:name=".Order.UnpaidActivity" android:label="订单管理"/>
-        <activity android:name=".User.my_addcontact" android:label="我的联系人"/>
-        <activity android:name=".Ticket.AddUserInfo" android:label="车票预定"/>
+        <provider
+            android:name=".User.MyContentProvider"
+            android:authorities="contact"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="string"></provider>
+
+        <activity
+            android:name=".Ticket.PaidSuccessActivity"
+            android:label="支付成功！" />
+        <activity
+            android:name=".Ticket.TicketSubmitActivity"
+            android:label="车票预定" />
+        <activity
+            android:name=".Ticket.TicketBookingActivity"
+            android:label="车票预定" />
+        <activity
+            android:name=".Order.PaidActivity"
+            android:label="订单管理" />
+        <activity
+            android:name=".Order.UnpaidActivity"
+            android:label="订单管理" />
+        <activity
+            android:name=".User.my_addcontact"
+            android:label="我的联系人" />
+        <activity
+            android:name=".Ticket.AddUserInfo"
+            android:label="车票预定" />
         <activity android:name=".Ticket.CityActivity" />
         <activity android:name=".ViewPagerActivity" />
-        <activity android:name=".User.my_detailcontact" android:label="我的联系人"/>
-        <activity android:name=".User.my_pwd" android:label="我的密码"/>
-        <activity android:name=".User.my_account" android:label="我的账户"/>
-        <activity android:name=".User.my_contact" android:label="我的联系人"/>
-        <activity android:name=".MainActivity" android:label="登陆"/>
-        <activity android:name=".Ticket.Ticketone" android:label="车票预定"/>
-        <activity android:name=".Ticket.Tickettwo" android:label="车票预定"/>
+        <activity
+            android:name=".User.my_detailcontact"
+            android:label="我的联系人" />
+        <activity
+            android:name=".User.my_pwd"
+            android:label="我的密码" />
+        <activity
+            android:name=".User.my_account"
+            android:label="我的账户" />
+        <activity
+            android:name=".User.my_contact"
+            android:label="我的联系人" />
+        <activity
+            android:name=".MainActivity"
+            android:label="登陆" />
+        <activity
+            android:name=".Ticket.Ticketone"
+            android:label="车票预定" />
+        <activity
+            android:name=".Ticket.Tickettwo"
+            android:label="车票预定" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

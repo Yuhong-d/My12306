@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class Ticketone extends AppCompatActivity {
     private ListView listView;
-    private List<Map<String,Object>> list;
+    private List<Map<String,String>> list;
     private TextView preday,afterday,texttime,tvTo;
     Calendar rightNow = Calendar.getInstance();
     private int cyear = rightNow.get(Calendar.YEAR);
@@ -42,18 +42,9 @@ public class Ticketone extends AppCompatActivity {
         tvTo=findViewById(R.id.star_end);
         Intent intent=getIntent();
         tvTo.setText(intent.getStringExtra("start")+"-->"+intent.getStringExtra("end"));
+        list= (List<Map<String, String>>) intent.getSerializableExtra("list");
         texttime.setText(cyear+"-"+(cmonth+1)+"-"+cdate);
         listView = findViewById(R.id.lv_ticket);
-        list = new ArrayList<>();
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("banci","D5");
-        map1.put("tv_start","07:05");
-        map1.put("tv_over","11:55(0日)");
-        map1.put("seat1","无座:39");
-        map1.put("seat2","硬座:38");
-        map1.put("seat3","一等座:17");
-        map1.put("seat4","软卧:48");
-        list.add(map1);
         TickettwoAdapter tickettwoAdapter = new TickettwoAdapter(this,list);
         listView.setAdapter(tickettwoAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

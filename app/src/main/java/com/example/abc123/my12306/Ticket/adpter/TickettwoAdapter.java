@@ -13,9 +13,9 @@ import java.util.Map;
 
 public class TickettwoAdapter extends BaseAdapter {
     private Context context;
-    private List<Map<String, Object>> data;
+    private List<Map<String, String>> data;
 
-    public TickettwoAdapter(Context context, List<Map<String, Object>> data) {
+    public TickettwoAdapter(Context context, List<Map<String, String>> data) {
         this.context = context;
         this.data = data;
     }
@@ -55,7 +55,7 @@ public class TickettwoAdapter extends BaseAdapter {
         }
         viewHolder.tv_banci.setText((String) data.get(position).get("banci"));
         viewHolder.tv_start.setText((String) data.get(position).get("tv_start"));
-        viewHolder.tv_over.setText((String)data.get(position).get("tv_over"));
+        viewHolder.tv_over.setText((String)data.get(position).get("tv_end"));
         viewHolder.tv_seat1.setText((String)data.get(position).get("seat1"));
         viewHolder.tv_seat2.setText((String)data.get(position).get("seat2"));
         viewHolder.tv_seat3.setText((String)data.get(position).get("seat3"));

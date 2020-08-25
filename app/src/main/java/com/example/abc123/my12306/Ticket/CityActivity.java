@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -104,6 +105,12 @@ public class CityActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        setResult(404);
+        return super.onKeyDown(keyCode, event);
     }
 
     private class LetterListViewListener implements

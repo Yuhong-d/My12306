@@ -9,7 +9,8 @@
     <ListView
         android:id="@+id/lv_myaddcontact"
         android:layout_width="match_parent"
-        android:layout_height="400dp"></ListView>
+        android:layout_height="400dp"
+        android:padding="10dp"></ListView>
 
     <Button
         android:id="@+id/btn_save"
@@ -19,5 +20,6 @@
         android:background="#329CCD"
         android:textColor="@color/white"
         android:textSize="25sp"
-        android:text="保存" />
+        android:text="保存"
+        android:layout_margin="20dp"/>
 </LinearLayout>
