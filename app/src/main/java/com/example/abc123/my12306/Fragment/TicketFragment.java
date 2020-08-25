@@ -80,6 +80,11 @@ public class TicketFragment extends Fragment {
     private SharedPreferences sp2;
     private ArrayList<Map<String,String>> tansData;//ticketone的数据
     private ArrayList<Map<String,Object>> tansData2;//tickettwo的数据
+    
+    private List<String> searchRecordsList;//创建的类中所用的list
+    private List<String> tempList;//临时列表
+    private SearchListDbOperation searchListDbOperation;
+    
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -123,23 +128,16 @@ public class TicketFragment extends Fragment {
         turn = view.findViewById(R.id.turn);
          ImageView turn = getActivity().findViewById(R.id.turn);
          turn.setImageResource(R.drawable.turn);
-//         turn.setOnClickListener(new View.OnClickListener() {
-//             @Override
-//             public void onClick(View v) {
-//              String left=tv_star.getText().toString().trim();
-//              String right=tv_end.getText().toString().trim();
-//              tv_star.setText("right");
-//              tv_end.setText("left");
-//             }
-//         });
-         //待解决
-         final String first=tv_star.getText().toString().trim();
-         String last=tv_end.getText().toString().trim();
-         mHistoryKeywords=new ArrayList<String>();
-         mHistoryKeywords.add(first+"—>"+last);
-         arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.textView,mHistoryKeywords);
-         listView.setAdapter(arrayAdapter);
-         //城市导航
+        
+        //历史查询
+         //SQL表操作
+         searchListDbOperation=new SearchListDbOperation(getContext(),"building");
+         searchRecordsList=new ArrayList<>();
+         tempList=new ArrayList<>();
+         tempList=searchListDbOperation.getRecordsList();
+         reversedList();
+
+        //城市导航
          tv_star.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -230,7 +228,16 @@ public class TicketFragment extends Fragment {
          bt_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-
+                //删除表
+                //判断数据库中是否存在该记录
+                if (!searchListDbOperation.isHasRecord(record)) {
+                    tempList.add(record);
+                }
+//                searchListDbOperation.deleteAllRecords();
+                //将搜索记录保存至数据库中
+                searchListDbOperation.addRecords(record);
+                reversedList();
+                arrayAdapter.notifyDataSetChanged();
                  if (!NetUtils.check(getContext())) {
                      Toast.makeText(getContext(), "网络异常，请检查！",
                              Toast.LENGTH_SHORT).show();
@@ -355,6 +362,18 @@ public class TicketFragment extends Fragment {
             map.put("seat1",object1.getString("seatName")+":"+num);
         }
     }
+     //颠倒list顺序，用户输入的信息会从上依次往下显示
+    private void reversedList() {
+        searchRecordsList.clear();
+        for(int i = tempList.size() - 1 ; i >= 0 ; i --){
+            searchRecordsList.add(tempList.get(i));
+
+        }
+        String[] seplace={searchRecordsList.get(0),searchRecordsList.get(1)};
+        arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.historytv,seplace);
+        listView.setAdapter(arrayAdapter);
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -375,17 +394,4 @@ public class TicketFragment extends Fragment {
                break;
         }
     }
-    public void AddNewData(){
-        String first=tv_star.getText().toString().trim();
-        String last=tv_end.getText().toString().trim();
-        mHistoryKeywords.add(first+"—>"+last);
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.textView,mHistoryKeywords);
-        listView.setAdapter(arrayAdapter);
-    }
-//    private void updateListItem(int postion,Data mData){
-//        int visiblePosition = listView.getFirstVisiblePosition();
-//        View v =listView.getChildAt(postion - visiblePosition);
-//        TextView tv = (TextView) v.findViewById(R.id.textView);
-//        tv.setText(mData.getContent());
-//    }
 }
