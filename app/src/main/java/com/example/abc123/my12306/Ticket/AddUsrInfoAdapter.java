@@ -11,16 +11,22 @@ import android.widget.TextView;
 
 import com.example.abc123.my12306.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class AddUsrInfoAdapter extends BaseAdapter {
     private Context mcontext;
-    private List<Map<String,String>>datalist;
+    private List<Map<String,Object>>datalist;
+    List<Boolean> mchecked;
 
-    public AddUsrInfoAdapter(Context context, List<Map<String,String>>data){
+    public AddUsrInfoAdapter(Context context, List<Map<String,Object>>data){
         mcontext=context;
         datalist=data;
+        mchecked=new ArrayList<Boolean>();
+        for (int i=0;i<datalist.size();i++){
+            mchecked.add(false);
+        }
     }
     @Override
     public int getCount() {
@@ -38,7 +44,7 @@ public class AddUsrInfoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHodler viewHodler=null;
         if(convertView == null){
             viewHodler=new ViewHodler();
@@ -52,9 +58,17 @@ public class AddUsrInfoAdapter extends BaseAdapter {
         }else {
             viewHodler= (ViewHodler) convertView.getTag();
         }
-        viewHodler.tv1.setText(datalist.get(position).get("name"));
-        viewHodler.tv2.setText(datalist.get(position).get("idcard"));
-        viewHodler.tv3.setText(datalist.get(position).get("number"));
+        viewHodler.tv1.setText(datalist.get(position).get("name").toString());
+        viewHodler.tv2.setText(datalist.get(position).get("idcard").toString());
+        viewHodler.tv3.setText(datalist.get(position).get("num").toString());
+        viewHodler.cbx_addusr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox cb=(CheckBox)v;
+                mchecked.set(position,cb.isChecked());
+            }
+        });
+        viewHodler.cbx_addusr.setChecked(mchecked.get(position));
 
         return convertView;
     }

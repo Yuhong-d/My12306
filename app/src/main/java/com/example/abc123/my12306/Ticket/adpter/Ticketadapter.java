@@ -14,16 +14,19 @@ import com.example.abc123.my12306.Ticket.TicketBookingActivity;
 import com.example.abc123.my12306.Ticket.Ticketone;
 import com.example.abc123.my12306.Ticket.Tickettwo;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 public class Ticketadapter extends BaseAdapter {
     private Context context;
     private List<Map<String, Object>> data;
+    Map<String,Object> map;
 
-    public Ticketadapter(Context context, List<Map<String, Object>> data) {
+    public Ticketadapter(Context context, List<Map<String, Object>> data,Map<String,Object> map) {
         this.context = context;
         this.data = data;
+        this.map=map;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class Ticketadapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, final ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         ViewHolder viewHolder = null;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -63,6 +66,10 @@ public class Ticketadapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(context, TicketBookingActivity.class);
+                intent.putExtra("dataMap", (Serializable) map);
+                intent.putExtra("seat",data.get(position).get("seattype").toString());
+                intent.putExtra("ticketNum",data.get(position).get("ticket").toString());
+                intent.putExtra("price",data.get(position).get("price").toString());
                 context.startActivity(intent);
             }
         });

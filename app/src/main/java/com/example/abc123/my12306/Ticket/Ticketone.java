@@ -3,6 +3,7 @@ package com.example.abc123.my12306.Ticket;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +52,7 @@ public class Ticketone extends AppCompatActivity {
     private List<Map<String, Object>> data;
     private SimpleAdapter Adapter;
     private TextView preday, afterday, texttime, tvTo;
+    private List<Map<String,String>> list;
 
 
     @Override
@@ -62,8 +66,8 @@ public class Ticketone extends AppCompatActivity {
         listView = findViewById(R.id.lv_ticket);
 
         Intent intent = getIntent();
-        tvTo.setText(getIntent().getStringExtra("stationFrom") + "-" + getIntent().getStringExtra("stationTo"));
-        //   list = (List<Map<String, String>>) intent.getSerializableExtra("list");
+        tvTo.setText(getIntent().getStringExtra("start") + "-->" + getIntent().getStringExtra("end"));
+           list = (List<Map<String, String>>) intent.getSerializableExtra("list");
         texttime.setText(getIntent().getStringExtra("startTicketDate"));
 
 
@@ -81,34 +85,15 @@ public class Ticketone extends AppCompatActivity {
         );
         listView.setAdapter(Adapter);
 
-        //TickettwoAdapter tickettwoAdapter = new TickettwoAdapter(this, list);
-        // listView.setAdapter(tickettwoAdapter);
-
-
-        // listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        //     @Override
-        //     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //        Intent intent = new Intent();
-        //        intent.setClass(Ticketone.this, Tickettwo.class);
-        //        intent.putExtra("start-end", tvTo.getText().toString());
-        //        startActivity(intent);
-        //    }
-        //  });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                Log.d("yy", "这里1");
-                intent.putExtra("stationTitle", tvTo.getText().toString());
-                intent.putExtra("dateTitle", texttime.getText().toString());
                 intent.setClass(Ticketone.this, Tickettwo.class);
-                // intent.putExtra("train",(Serializable) trains[i]);
-                intent.putExtra("trainNo", trains[i].getTrainNo());
-                intent.putExtra("trainDtime", trains[i].getDurationTime());
-                intent.putExtra("trainFromTime", trains[i].getStartTime() + "-" + trains[i].getArriveTime());
-                intent.putExtra("StationName", trains[i].getFromStationName() + "-" + trains[i].getToStationName());
-                intent.putExtra("day", trains[i].getDayDifference());
-                //intent.putExtra("trainDate",trains[i].getStartTrainDate());
+                intent.putExtra("start-end",tvTo.getText().toString());
+                intent.putExtra("trainNo",position);
+                intent.putExtra("time",texttime.getText().toString());
+                intent.putExtra("list", (Serializable) list);
                 startActivity(intent);
             }
         });
@@ -160,9 +145,9 @@ public class Ticketone extends AppCompatActivity {
             //获取sessionId
             sp = getSharedPreferences("userinfo", Context.MODE_PRIVATE);
             String sessionId = sp.getString("cookie", "");
-            RequestBody requestBody = new FormBody.Builder()
-                    .add("fromStationName", getIntent().getStringExtra("stationFrom"))
-                    .add("toStationName", getIntent().getStringExtra("stationTo"))
+            @SuppressLint("WrongThread") RequestBody requestBody = new FormBody.Builder()
+                    .add("fromStationName", getIntent().getStringExtra("start"))
+                    .add("toStationName", getIntent().getStringExtra("end"))
                     .add("startTrainDate", texttime.getText().toString().split(" ")[0])
                     .build();
             //   Log.d(TAG, "requestbody: "+texttime.getText().toString().split(" ")[0]);

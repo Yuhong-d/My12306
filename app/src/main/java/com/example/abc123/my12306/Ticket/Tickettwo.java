@@ -75,21 +75,21 @@ public class Tickettwo extends AppCompatActivity {
         int len= (int) (map.size()*0.5-1);
         for (int i=1;i<len;i++){
             Map<String,Object> map1 = new HashMap<>();
-            Log.d("TwoTicket", "msg:"+"seat"+i+"len:"+len);
             map1.put("seattype",map.get("seat"+i).toString().split(":")[0]);
             map1.put("ticket",map.get("seat"+i).toString().split(":")[1]);
             map1.put("price",map.get("price"+i).toString());
-            Log.d("TwoTicket", "price:"+map.get("price"+i).toString());
             data.add(map1);
         }
-
-        ticketadapter = new Ticketadapter(this,data);
+        map.put("fromStationName",tvTo.getText().toString().split("-->")[0]);
+        map.put("toStationName",tvTo.getText().toString().split("-->")[1]);
+        map.put("startTrainDate",texttime.getText().toString());
+        ticketadapter = new Ticketadapter(this,data,map);
         listView.setAdapter(ticketadapter);
         tv1=findViewById(R.id.tvTrainNo);tv1.setText(map.get("banci").toString());
         tv2=findViewById(R.id.tvStarTime);tv2.setText(map.get("tv_start").toString());
         tv3=findViewById(R.id.tvArriveTime);tv3.setText(map.get("tv_end").toString());
         tv4=findViewById(R.id.tvDurationTime);tv4.setText("历时"+map.get("durationTime").toString());
-        cdate=(Integer)Integer.parseInt(texttime.getText().toString().split("-")[2]) ;
+        cdate=(Integer)Integer.parseInt(texttime.getText().toString().split(" ")[0].split("-")[2]) ;
         final Handler handlerPre=new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {
