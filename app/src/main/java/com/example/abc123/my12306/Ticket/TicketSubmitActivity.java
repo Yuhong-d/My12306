@@ -39,7 +39,7 @@ public class TicketSubmitActivity extends AppCompatActivity {
         map.put("time","2016-4-6");
         map.put("carriage","2车10号");
         dataList.add(map);
-        OrderActivityAdapter activityAdapter=new OrderActivityAdapter(TicketSubmitActivity.this,dataList);
+        OrderActivityAdapter activityAdapter=new OrderActivityAdapter(TicketSubmitActivity.this,dataList,true);
         ls.setAdapter(activityAdapter);
 
         tvCancel.setOnClickListener(new View.OnClickListener() {

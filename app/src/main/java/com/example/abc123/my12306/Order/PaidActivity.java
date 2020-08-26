@@ -1,14 +1,25 @@
 package com.example.abc123.my12306.Order;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.abc123.my12306.NetUtils;
 import com.example.abc123.my12306.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -25,17 +37,55 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PaidActivity extends AppCompatActivity {
     private ListView ls;
     private List<Map<String, Object>> dataList;
     private TextView tv;
     private Button button;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    int result=msg.arg1;
+                    if (result==0){
+                        //失败
+                        Toast.makeText(PaidActivity.this,"退票失败",Toast.LENGTH_SHORT).show();
+                    }else if (result==1) {
+                        Toast.makeText(PaidActivity.this,"退票成功，3秒后返回订单页",Toast.LENGTH_SHORT).show();
+                        Timer timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                            public void run() {
+                                Intent intent1=new Intent(PaidActivity.this,Unpaid.instance.getActivity().getClass());
+                                intent1.putExtra("page",1);
+                                startActivity(intent1);
+                            }
+                        }, 3000);
+                    }else{
+                        Toast.makeText(PaidActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 2:
+                    Toast.makeText(PaidActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +97,12 @@ public class PaidActivity extends AppCompatActivity {
         Intent intent=getIntent();
         tv.setText(intent.getStringExtra("num"));
         dataList= (List<Map<String, Object>>) intent.getSerializableExtra("data");
-        OrderActivityAdapter activityAdapter=new OrderActivityAdapter(PaidActivity.this,dataList);
+        OrderActivityAdapter activityAdapter=new OrderActivityAdapter(PaidActivity.this,dataList,true);
         ls.setAdapter(activityAdapter);
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listDialog();
+                listDialog(position);
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +112,56 @@ public class PaidActivity extends AppCompatActivity {
             }
         });
     }
-    private void listDialog(){
+    private void listDialog(final int position){
         AlertDialog.Builder builder=new AlertDialog.Builder(PaidActivity.this);
         final String[] items={"退票","改签"};
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(PaidActivity.this,items[which],Toast.LENGTH_SHORT).show();
+            public void onClick(final DialogInterface dialog, int which) {
+                switch (items[which]){
+                    case "退票":
+                        if (!NetUtils.check(PaidActivity.this)) {
+                            Toast.makeText(PaidActivity.this, "网络异常，请检查！",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                super.run();
+                                Message msg=handler.obtainMessage();
+                                OkHttpClient client = new OkHttpClient();
+                                //获取sessionId
+                                SharedPreferences sp=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                                String sessionId =sp.getString("cookie","");
+                                RequestBody requestBody=new FormBody.Builder()
+                                        .add("orderId",tv.getText().toString())
+                                        .add("id",dataList.get(position).get("id").toString())
+                                        .add("idType",dataList.get(position).get("idType").toString())
+                                        .build();
+                                Request request = new Request.Builder()
+                                        .url("http://10.0.2.2:8080/My12306/otn/Refund")
+                                        .addHeader("cookie", sessionId)
+                                        .post(requestBody)
+                                        .build();
+                                try {
+                                    Response response=client.newCall(request).execute();
+                                    if (response.isSuccessful()){
+                                        String responsedata=response.body().string();
+                                        Log.d("Unpaid", "responsedata: "+responsedata);
+                                        msg.what=1;
+                                        msg.arg1=Integer.parseInt(responsedata.substring(1,2));
+                                    }else {
+                                        msg.what=2;
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    msg.what=2;
+                                }
+                                handler.sendMessage(msg);
+                            }
+                        }.start();
+                }
             }
         });
         builder.setNegativeButton("取消",null);

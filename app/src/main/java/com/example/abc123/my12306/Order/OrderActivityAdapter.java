@@ -16,10 +16,12 @@ import java.util.Map;
 public class OrderActivityAdapter extends BaseAdapter {
     private Context context;
     private List<Map<String, Object>> data;
+    private boolean b;
 
-    public OrderActivityAdapter(Context context, List<Map<String, Object>> data) {
+    public OrderActivityAdapter(Context context, List<Map<String, Object>> data,boolean b) {
         this.context = context;
         this.data = data;
+        this.b=b;
     }
 
     @Override
@@ -57,6 +59,9 @@ public class OrderActivityAdapter extends BaseAdapter {
         viewHolder.tv3.setText((String)data.get(position).get("time"));
         viewHolder.tv4.setText((String)data.get(position).get("carriage"));
         viewHolder.imageView.setImageResource(R.drawable.forward_25);
+        if (!b){
+            viewHolder.imageView.setVisibility(View.GONE);
+        }
         return convertView;
     }
     public class ViewHolder {

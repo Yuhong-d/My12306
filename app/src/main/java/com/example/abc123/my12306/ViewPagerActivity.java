@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -80,8 +81,8 @@ public class ViewPagerActivity extends FragmentActivity {
         image.setImageMatrix(matrix);
     }
 
-    public void InitViewPager(){
-        mPager = (ViewPager)findViewById(R.id.viewpager);
+    public void InitViewPager() {
+        mPager = (ViewPager) findViewById(R.id.viewpager);
         //数据源
         fragmentList = new ArrayList<Fragment>();
         TicketFragment ticketFragment = new TicketFragment();
@@ -95,6 +96,11 @@ public class ViewPagerActivity extends FragmentActivity {
         mPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList));
         mPager.setCurrentItem(0);//设置当前显示标签页为第一页
         mPager.addOnPageChangeListener(new MyOnPageChangeListener());//页面变化时的监听器
+        Intent intent = getIntent();
+        if (intent != null) {
+            int page = intent.getIntExtra("page", 0);//显示标签页第一页
+            mPager.setCurrentItem(page);
+        }
     }
 
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {

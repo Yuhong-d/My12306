@@ -1,6 +1,7 @@
 package com.example.abc123.my12306.Order;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,13 +40,15 @@ import okhttp3.Response;
 public class Unpaid extends Fragment {
     private ListView ls;
     private List<Map<String, Object>> dataList,transdata;
+    private   OrderAdapter orderAdapter;
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
-                    OrderAdapter orderAdapter=new OrderAdapter(getContext(),dataList);
+                    orderAdapter=new OrderAdapter(getContext(),dataList);
                     ls.setAdapter(orderAdapter);
                     break;
                 case 2:
@@ -58,6 +61,7 @@ public class Unpaid extends Fragment {
     public Unpaid(){
 
     }
+    public static Unpaid instance;
 
     @Nullable
     @Override
@@ -67,6 +71,7 @@ public class Unpaid extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        instance=this;
         super.onViewCreated(view, savedInstanceState);
         ls=view.findViewById(R.id.ls);
 //        dataList=new ArrayList<Map<String, String>>();
@@ -88,6 +93,9 @@ public class Unpaid extends Fragment {
             }
         });
 
+        Update();
+    }
+    private void Update(){
         //数据请求
         if (!NetUtils.check(getContext())) {
             Toast.makeText(getContext(), "网络异常，请检查！",
@@ -162,4 +170,5 @@ public class Unpaid extends Fragment {
             }
         }.start();
     }
+
 }

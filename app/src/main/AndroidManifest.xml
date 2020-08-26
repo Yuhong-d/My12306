@@ -41,6 +41,9 @@
             android:name=".Order.UnpaidActivity"
             android:label="订单管理" />
         <activity
+            android:name=".Order.OrderSuccessActivity"
+            android:label="订单管理" />
+        <activity
             android:name=".User.my_addcontact"
             android:label="我的联系人" />
         <activity

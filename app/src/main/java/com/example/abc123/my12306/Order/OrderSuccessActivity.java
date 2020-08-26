@@ -1,6 +1,4 @@
-package com.example.abc123.my12306.Ticket;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.abc123.my12306.Order;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,9 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.abc123.my12306.Order.PaidActivity;
-import com.example.abc123.my12306.Order.Unpaid;
-import com.example.abc123.my12306.Order.UnpaidActivity;
 import com.example.abc123.my12306.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -21,13 +16,13 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class PaidSuccessActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class OrderSuccessActivity extends AppCompatActivity {
     private TextView textView;
     private ImageView imageView;
     private Button button;
@@ -54,14 +49,14 @@ public class PaidSuccessActivity extends AppCompatActivity {
             Map<String,Object> map1=dataList.get(i);
             s.append(map1.get("name")+","+map1.get("train")+","+map1.get("time")+","+map1.get("carriage")+"\n");
         }
-        Bitmap bitmap=createQRCodeBitmap(s.toString(),500,500,"UTF-8",
+        Bitmap bitmap=createQRCodeBitmap(s.toString(),1000,1000,"UTF-8",
                 "H","1");
         imageView.setImageBitmap(bitmap);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(PaidSuccessActivity.this,Unpaid.instance.getActivity().getClass());
+                Intent intent1=new Intent(OrderSuccessActivity.this,Unpaid.instance.getActivity().getClass());
                 intent1.putExtra("page",1);
                 startActivity(intent1);
                 finish();
