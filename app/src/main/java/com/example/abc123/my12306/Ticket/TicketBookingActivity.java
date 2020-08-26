@@ -31,15 +31,12 @@ import java.util.Map;
 
 public class TicketBookingActivity extends AppCompatActivity {
 
-    private TextView tv_total_price;//总价的TextView
-    private TextView tv_go_to_pay;//去支付的TextView
     private TextView tv_addhuman,tv_submit;//添加乘客
-    private double totalPrice = 0.00;//总价钱
-    private int totalCount = 0;//总票数
     private ListView listView;
     private List<Map<String,Object>> data;
-    private TextView tv1,tv2,tv3,tv4,tv5,tv6,tvPrice,tvSeat;
+    private TextView tv1,tv2,tv3,tv4,tv5,tv6,tvPrice,tvSeat,tvTotal;
     private MyAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +49,8 @@ public class TicketBookingActivity extends AppCompatActivity {
         tv5=findViewById(R.id.startime);
         tv6=findViewById(R.id.endtime);
         tvSeat=findViewById(R.id.tickleft);
-        tvPrice=findViewById(R.id.tvPrice);
+        tvPrice=findViewById(R.id.tvPrice);//单价
+        tvTotal=findViewById(R.id.tvTotal);//订单总额
         Intent intent=getIntent();
         Map<String,Object> map= (Map<String, Object>) intent.getSerializableExtra("dataMap");
         tv1.setText(map.get("fromStationName").toString());
@@ -74,8 +72,10 @@ public class TicketBookingActivity extends AppCompatActivity {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
+                                double price= Double.parseDouble(tvPrice.getText().toString());
                                 data.remove(j);
                                 adapter.notifyDataSetChanged();
+                                tvTotal.setText("订单总额：￥"+price*data.size());
                             }
                         })
                         .setNegativeButton("取消",null)
@@ -113,9 +113,11 @@ public class TicketBookingActivity extends AppCompatActivity {
                 }
                 switch (requestCode) {
                     case 110:
+                        double price= Double.parseDouble(tvPrice.getText().toString());
                         data = (List<Map<String, Object>>) d.getSerializableExtra("data");
                         adapter = new MyAdapter(TicketBookingActivity.this, data);
                         listView.setAdapter(adapter);
+                        tvTotal.setText("订单总额：￥"+price*data.size());
                         break;
                 }
             }

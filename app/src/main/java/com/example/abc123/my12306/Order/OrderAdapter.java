@@ -2,6 +2,8 @@ package com.example.abc123.my12306.Order;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.TimedMetaData;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +14,15 @@ import android.widget.TextView;
 
 import com.example.abc123.my12306.R;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 public class OrderAdapter extends BaseAdapter {
     private Context context;
-    private List<Map<String, String>> data;
+    private List<Map<String, Object>> data,UnpaidData,PaidData;
 
-    public OrderAdapter(Context context, List<Map<String, String>> data){
+    public OrderAdapter(Context context, List<Map<String, Object>> data){
         this.context = context;
         this.data = data;
     }
@@ -67,7 +70,7 @@ public class OrderAdapter extends BaseAdapter {
             case "已支付":
                 viewHolder.tv2.setTextColor(context.getResources().getColor(R.color.blue));
                 break;
-            case "待支付":
+            case "未支付":
                 viewHolder.tv2.setTextColor(context.getResources().getColor(R.color.orange));
                 break;
             case "已取消":
@@ -79,17 +82,17 @@ public class OrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
-                intent.putExtra("num",data.get(position).get("num"));
-                intent.putExtra("train",data.get(position).get("train"));
-                intent.putExtra("time",data.get(position).get("time"));
-                switch ( data.get(position).get("type")){
+                intent.putExtra("num",data.get(position).get("num").toString());
+                switch ( data.get(position).get("type").toString()){
                     case "已支付":
                         intent.setClass(context,PaidActivity.class);
+                        intent.putExtra("data", (Serializable) data.get(position).get("passenger"));
                         context.startActivity(intent);
                         break;
-                    case "待支付":
+                    case "未支付":
                         intent.setClass(context,UnpaidActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("data", (Serializable) data.get(position).get("passenger"));
                         context.startActivity(intent);
                         break;
                 }

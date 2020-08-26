@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class PaidActivity extends AppCompatActivity {
     private ListView ls;
-    private List<Map<String, String>> dataList;
+    private List<Map<String, Object>> dataList;
     private TextView tv;
     private Button button;
 
@@ -46,13 +46,7 @@ public class PaidActivity extends AppCompatActivity {
         button=findViewById(R.id.button);
         Intent intent=getIntent();
         tv.setText(intent.getStringExtra("num"));
-        dataList=new ArrayList<Map<String, String>>();
-        Map<String,String> map=new HashMap<>();
-        map.put("name","孔乙己");
-        map.put("train",intent.getStringExtra("train"));
-        map.put("time",intent.getStringExtra("time"));
-        map.put("carriage","2车10号");
-        dataList.add(map);
+        dataList= (List<Map<String, Object>>) intent.getSerializableExtra("data");
         OrderActivityAdapter activityAdapter=new OrderActivityAdapter(PaidActivity.this,dataList);
         ls.setAdapter(activityAdapter);
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,7 +88,7 @@ public class PaidActivity extends AppCompatActivity {
         ImageView imageView=(ImageView)view.findViewById(R.id.imageView);
         StringBuffer s=new StringBuffer();
         for (int i=0;i<dataList.size();i++){
-            Map<String,String> map=dataList.get(i);
+            Map<String,Object> map=dataList.get(i);
             s.append(map.get("name")+","+map.get("train")+","+map.get("time")+","+map.get("carriage"));
         }
         Bitmap bitmap=createQRCodeBitmap(s.toString(),1000,1000,"UTF-8",

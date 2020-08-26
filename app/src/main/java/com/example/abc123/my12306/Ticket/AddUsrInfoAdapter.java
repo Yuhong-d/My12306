@@ -1,6 +1,7 @@
 package com.example.abc123.my12306.Ticket;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,12 @@ public class AddUsrInfoAdapter extends BaseAdapter {
     public AddUsrInfoAdapter(Context context, List<Map<String,Object>>data){
         mcontext=context;
         datalist=data;
-        mchecked=new ArrayList<Boolean>();
-        for (int i=0;i<datalist.size();i++){
-            mchecked.add(false);
-        }
+        Log.d("sizeOfdata", "data: "+datalist.size());
+//        mchecked=new ArrayList<Boolean>();
+//        for (int i=0;i<datalist.size();i++){
+//            mchecked.add(false);
+//        }
+
     }
     @Override
     public int getCount() {
@@ -68,6 +71,12 @@ public class AddUsrInfoAdapter extends BaseAdapter {
                 mchecked.set(position,cb.isChecked());
             }
         });
+        Log.d("sizeOfdata", "data: "+datalist.size());
+        mchecked=new ArrayList<Boolean>();
+        for (int i=0;i<datalist.size();i++){
+            mchecked.add(false);
+        }
+        Log.d("sizeOfdata", "mchek: "+mchecked.size());
         viewHodler.cbx_addusr.setChecked(mchecked.get(position));
 
         return convertView;

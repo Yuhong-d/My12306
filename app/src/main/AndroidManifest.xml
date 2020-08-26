@@ -32,6 +32,9 @@
             android:name=".Ticket.TicketBookingActivity"
             android:label="车票预定" />
         <activity
+            android:name=".Ticket.AddNewcontact"
+            android:label="添加联系人" />
+        <activity
             android:name=".Order.PaidActivity"
             android:label="订单管理" />
         <activity

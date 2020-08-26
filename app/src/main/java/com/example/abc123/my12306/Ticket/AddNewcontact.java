@@ -1,8 +1,4 @@
-package com.example.abc123.my12306.User;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.abc123.my12306.Ticket;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -14,13 +10,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,24 +29,23 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.abc123.my12306.Fragment.MyFragment;
 import com.example.abc123.my12306.NetUtils;
 import com.example.abc123.my12306.R;
+import com.example.abc123.my12306.User.DialogUtils;
+import com.example.abc123.my12306.User.my_contact;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.net.URL;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -58,7 +53,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class my_addcontact extends AppCompatActivity {
+public class AddNewcontact extends AppCompatActivity {
     private static final String TAG = "addContact";
     private ListView listView;
     private Button button;
@@ -76,19 +71,19 @@ public class my_addcontact extends AppCompatActivity {
                    // Log.d(TAG, "result的数据： "+result);
                //     String a = "1";
                     if ("1".equals(msg.obj)){
-                        Toast.makeText(my_addcontact.this,"保存成功！",Toast.LENGTH_SHORT).show();
-                        my_contact.instance.finish();
-                        Intent intent=new Intent(my_addcontact.this,my_contact.class);
+                        Toast.makeText(AddNewcontact.this,"保存成功！",Toast.LENGTH_SHORT).show();
+                        AddUserInfo.instance.finish();
+                        Intent intent=new Intent(AddNewcontact.this,AddUserInfo.class);
                         startActivity(intent);
-                        my_addcontact.this.finish();
+                        AddNewcontact.this.finish();
 
                     }else {
-                        Toast.makeText(my_addcontact.this,"保存失败！",Toast.LENGTH_SHORT).show();
-                        my_addcontact.this.finish();
+                        Toast.makeText(AddNewcontact.this,"保存失败！",Toast.LENGTH_SHORT).show();
+                        AddNewcontact.this.finish();
                     }
                     break;
                 case 2:
-                    Toast.makeText(my_addcontact.this,"数据错误！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewcontact.this,"数据错误！",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -129,9 +124,9 @@ public class my_addcontact extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 switch (position){
                     case 0:
-                        final EditText editName = new EditText(my_addcontact.this);
+                        final EditText editName = new EditText(AddNewcontact.this);
                         editName.setText((String) data.get(position).get("value"));
-                        new AlertDialog.Builder(my_addcontact.this)
+                        new AlertDialog.Builder(AddNewcontact.this)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setTitle("请输入姓名")
                                 .setView(editName)
@@ -161,8 +156,8 @@ public class my_addcontact extends AppCompatActivity {
                                 .show();
                         break;
                     case 1:
-                        final String[] idtype = {"身份证", "学生证", "残疾证", "其他"};
-                        new AlertDialog.Builder(my_addcontact.this)
+                        final String[] idtype = {"身份证", "其他"};
+                        new AlertDialog.Builder(AddNewcontact.this)
                                 .setTitle("请选择证件类型")
                                 .setSingleChoiceItems(idtype, 0, new DialogInterface.OnClickListener() {
                                     @Override
@@ -188,9 +183,9 @@ public class my_addcontact extends AppCompatActivity {
                                 .show();
                         break;
                     case 2:
-                        final EditText editIdcard = new EditText(my_addcontact.this);
+                        final EditText editIdcard = new EditText(AddNewcontact.this);
                         editIdcard.setText((String) data.get(position).get("value"));
-                        new AlertDialog.Builder(my_addcontact.this)
+                        new AlertDialog.Builder(AddNewcontact.this)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setTitle("请输入证件号码")
                                 .setView(editIdcard)
@@ -219,8 +214,8 @@ public class my_addcontact extends AppCompatActivity {
                                 .show();
                         break;
                     case 3:
-                        final String[] data1 = {"成人", "学生", "儿童", "特殊人群"};
-                        new AlertDialog.Builder(my_addcontact.this)
+                        final String[] data1 = {"成人", "学生"};
+                        new AlertDialog.Builder(AddNewcontact.this)
                                 .setTitle("请选择乘客类型")
                                 .setSingleChoiceItems(data1, 0, new DialogInterface.OnClickListener() {
                                     @Override
@@ -240,9 +235,9 @@ public class my_addcontact extends AppCompatActivity {
                                 .show();
                         break;
                     case 4:
-                        final EditText editTel = new EditText(my_addcontact.this);
+                        final EditText editTel = new EditText(AddNewcontact.this);
                         editTel.setText((String) data.get(position).get("value"));
-                        new AlertDialog.Builder(my_addcontact.this)
+                        new AlertDialog.Builder(AddNewcontact.this)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setTitle("请输入电话号码")
                                 .setView(editTel)
@@ -276,63 +271,12 @@ public class my_addcontact extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!NetUtils.check(my_addcontact.this)) {
-                    Toast.makeText(my_addcontact.this, "网络异常，请检查！",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }else if (isContentEmpty()){
-                    Toast.makeText(my_addcontact.this, "请将信息填写完整！",
+                if (isContentEmpty()) {
+                    Toast.makeText(AddNewcontact.this, "请将信息填写完整！",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                new Thread(){
-                    @Override
-                    public void run() {
-                       // super.run();
-                        Message msg = handler.obtainMessage();
-                        OkHttpClient client = new OkHttpClient();
-                        //获取sessionId
-                        sp=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
-                        String sessionId =sp.getString("cookie","");
-                        Log.d(TAG, "session： " + sessionId);
-                        //建立请求
-                        RequestBody requestBody=new FormBody.Builder()
-                                .add("姓名",data.get(0).get("value").toString())
-                                .add("证件类型",data.get(1).get("value").toString())
-                                .add("证件号码",data.get(2).get("value").toString())
-                                .add("乘客类型",data.get(3).get("value").toString())
-                                .add("电话",data.get(4).get("value").toString())
-                                .add("action","new")
-                                .build();
-                        Request request = new Request.Builder()
-                                .url("http://10.0.2.2:8080/My12306/otn/Passenger")
-                                .addHeader("cookie", sessionId)
-                                .post(requestBody)
-                                .build();
-                        try {
-                            Response response = client.newCall(request).execute();
-                            String responsedata = response.body().string();
-                            Log.d(TAG, "获取的服务器数据： "+responsedata);
-                            if (response.isSuccessful()) {
-
-                            //    JSONObject jsonObject=new JSONObject(responsedata);
-                                Gson gson = new GsonBuilder().create();
-                                String resultString = gson.fromJson(responsedata, String.class);
-                                msg.obj = resultString;
-                                msg.what = 1;
-                            }else{
-                                msg.what=2;
-                            }
-                        }catch (IOException e) {
-                            e.printStackTrace();
-                            msg.what=2;
-                        } catch (JsonSyntaxException e) {
-                            e.printStackTrace();
-                            msg.what=3;
-                        }
-                        handler.sendMessage(msg);
-                    }
-                }.start();
+                Commited();//是否同意保存
 
             }
         });
@@ -346,6 +290,88 @@ public class my_addcontact extends AppCompatActivity {
             }
         }
         return false;
+    }
+    //判断是否加入
+    private void Commited(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddNewcontact.this);
+        builder.setTitle("提醒");
+        builder.setMessage("是否保存到常用联系人");
+        builder.setNegativeButton("不保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(AddNewcontact.this, AddUserInfo.class);
+                    intent.putExtra("data", (Serializable) data);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    dialog.dismiss();
+            }
+
+        });
+        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                if (!NetUtils.check(AddNewcontact.this)) {
+                    Toast.makeText(AddNewcontact.this, "网络异常，请检查！",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        // super.run();
+                        Message msg = handler.obtainMessage();
+                        OkHttpClient client = new OkHttpClient();
+                        //获取sessionId
+                        sp = getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                        String sessionId = sp.getString("cookie", "");
+                        Log.d(TAG, "session： " + sessionId);
+                        //建立请求
+                        RequestBody requestBody = new FormBody.Builder()
+                                .add("姓名", data.get(0).get("value").toString())
+                                .add("证件类型", data.get(1).get("value").toString())
+                                .add("证件号码", data.get(2).get("value").toString())
+                                .add("乘客类型", data.get(3).get("value").toString())
+                                .add("电话", data.get(4).get("value").toString())
+                                .add("action", "new")
+                                .build();
+                        Request request = new Request.Builder()
+                                .url("http://10.0.2.2:8080/My12306/otn/Passenger")
+                                .addHeader("cookie", sessionId)
+                                .post(requestBody)
+                                .build();
+                        try {
+                            Response response = client.newCall(request).execute();
+                            String responsedata = response.body().string();
+                            Log.d(TAG, "获取的服务器数据： " + responsedata);
+                            if (response.isSuccessful()) {
+
+                                //    JSONObject jsonObject=new JSONObject(responsedata);
+                                Gson gson = new GsonBuilder().create();
+                                String resultString = gson.fromJson(responsedata, String.class);
+                                msg.obj = resultString;
+                                msg.what = 1;
+                            } else {
+                                msg.what = 2;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            msg.what = 2;
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                            msg.what = 3;
+                        }
+                        handler.sendMessage(msg);
+                    }
+                }.start();
+            }
+        });
+        builder.create().show();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        setResult(404);
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -370,7 +396,7 @@ public class my_addcontact extends AppCompatActivity {
     private void addLayout() {
         int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.READ_CONTACTS);
         if(hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(my_addcontact.this,new String[] {Manifest.permission.READ_CONTACTS},1);
+            ActivityCompat.requestPermissions(AddNewcontact.this,new String[] {Manifest.permission.READ_CONTACTS},1);
             return;
         }
         ContentResolver cr = getContentResolver();
@@ -395,9 +421,9 @@ public class my_addcontact extends AppCompatActivity {
             Log.d(TAG, "addLayout: "+number);
         }
         c2.close();
-        AlertDialog.Builder builder = new AlertDialog.Builder(my_addcontact.this)
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddNewcontact.this)
                 .setNegativeButton("取消", null);
-        View view = LayoutInflater.from(my_addcontact.this).inflate(R.layout.addcontact_dialog, null, false);
+        View view = LayoutInflater.from(AddNewcontact.this).inflate(R.layout.addcontact_dialog, null, false);
         //将view加入builder
         builder.setView(view).setTitle("请选择");
         //创建dialog

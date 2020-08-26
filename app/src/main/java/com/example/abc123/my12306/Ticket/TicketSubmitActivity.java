@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class TicketSubmitActivity extends AppCompatActivity {
     private ListView ls;
-    private List<Map<String, String>> dataList;
+    private List<Map<String, Object>> dataList;
     private TextView tvCancel,tvConfirm;
     private Button button;
 
@@ -32,8 +32,8 @@ public class TicketSubmitActivity extends AppCompatActivity {
         tvCancel=findViewById(R.id.tv_cancel);
         tvConfirm=findViewById(R.id.tv_confirm);
 
-        dataList=new ArrayList<Map<String, String>>();
-        Map<String,String> map=new HashMap<>();
+        dataList=new ArrayList<Map<String, Object>>();
+        Map<String,Object> map=new HashMap<>();
         map.put("name","孔乙己");
         map.put("train","G109");
         map.put("time","2016-4-6");

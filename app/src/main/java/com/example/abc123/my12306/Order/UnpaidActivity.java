@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class UnpaidActivity extends AppCompatActivity {
     private ListView ls;
-    private List<Map<String, String>> dataList;
+    private List<Map<String, Object>> dataList;
     private TextView tv,tvCancel,tvConfirm;
 
     @Override
@@ -34,13 +34,13 @@ public class UnpaidActivity extends AppCompatActivity {
         tvConfirm=findViewById(R.id.tv_confirm);
         Intent intent=getIntent();
         tv.setText(intent.getStringExtra("num"));
-        dataList=new ArrayList<Map<String, String>>();
-        Map<String,String> map=new HashMap<>();
-        map.put("name","冬不拉");
-        map.put("train",intent.getStringExtra("train"));
-        map.put("time",intent.getStringExtra("time"));
-        map.put("carriage","2车19号");
-        dataList.add(map);
+        dataList= (List<Map<String, Object>>) intent.getSerializableExtra("data");
+//        Map<String,String> map=new HashMap<>();
+//        map.put("name","冬不拉");
+//        map.put("train",intent.getStringExtra("train"));
+//        map.put("time",intent.getStringExtra("time"));
+//        map.put("carriage","2车19号");
+//        dataList.add(map);
         OrderActivityAdapter activityAdapter=new OrderActivityAdapter(UnpaidActivity.this,dataList);
         ls.setAdapter(activityAdapter);
         tvCancel.setOnClickListener(new View.OnClickListener() {

@@ -15,9 +15,9 @@ import java.util.Map;
 
 public class OrderActivityAdapter extends BaseAdapter {
     private Context context;
-    private List<Map<String, String>> data;
+    private List<Map<String, Object>> data;
 
-    public OrderActivityAdapter(Context context, List<Map<String, String>> data) {
+    public OrderActivityAdapter(Context context, List<Map<String, Object>> data) {
         this.context = context;
         this.data = data;
     }
