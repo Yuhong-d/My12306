@@ -304,6 +304,7 @@ public class my_addcontact extends AppCompatActivity {
                                 .add("电话",data.get(4).get("value").toString())
                                 .add("action","new")
                                 .build();
+                       // Log.d(TAG, "111111111111： " + requestBody);
                         Request request = new Request.Builder()
                                 .url("http://10.0.2.2:8080/My12306/otn/Passenger")
                                 .addHeader("cookie", sessionId)

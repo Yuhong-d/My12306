@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <CheckBox
-        android:id="@+id/cbx_addusr"
+        android:id="@+id/ckTicketPassengerListStep3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
@@ -17,24 +17,24 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvTicketPassengerListStep3Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="张三(成人)"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
         <TextView
-            android:id="@+id/tvIdCard"
+            android:id="@+id/tvTicketPassengerListStep3IdCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="身份证:289849765376387245"/>
         <TextView
-            android:id="@+id/tvTel"
+            android:id="@+id/tvTicketPassengerListStep3Tel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="电话:13889898923"/>
     </LinearLayout>
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/imgTicketPassengerListStep3Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
