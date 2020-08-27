@@ -192,7 +192,7 @@ public class my_detailcontact extends AppCompatActivity {
                                 .show();
                         break;
                     case 3:
-                        final String[] data1 = {"成人", "学生", "儿童", "特殊人群"};
+                        final String[] data1 = {"成人", "学生"};
                         new AlertDialog.Builder(my_detailcontact.this)
                                 .setTitle("请选择乘客类型")
                                 .setSingleChoiceItems(data1, 0, new DialogInterface.OnClickListener() {
