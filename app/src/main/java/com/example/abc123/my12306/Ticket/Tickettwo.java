@@ -3,6 +3,7 @@ package com.example.abc123.my12306.Ticket;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -190,6 +191,7 @@ public class Tickettwo extends AppCompatActivity {
                                 .add("startTrainDate",texttime.getText().toString())
                                 .add("trainNo",tv1.getText().toString())
                                 .build();
+
                         Request request = new Request.Builder()
                                 .url("http://10.0.2.2:8080/My12306/otn/Train")
                                 .addHeader("cookie", sessionId)

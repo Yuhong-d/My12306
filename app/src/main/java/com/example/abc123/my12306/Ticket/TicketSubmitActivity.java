@@ -21,7 +21,7 @@ import java.util.Map;
 public class TicketSubmitActivity extends AppCompatActivity {
     private ListView ls;
     private List<Map<String, Object>> dataList;
-    private TextView tvCancel,tvConfirm;
+    private TextView tvCancel,tvConfirm,tvOrderId;
     private Button button;
 
     @Override
@@ -31,14 +31,10 @@ public class TicketSubmitActivity extends AppCompatActivity {
         ls=findViewById(R.id.ls);
         tvCancel=findViewById(R.id.tv_cancel);
         tvConfirm=findViewById(R.id.tv_confirm);
-
-        dataList=new ArrayList<Map<String, Object>>();
-        Map<String,Object> map=new HashMap<>();
-        map.put("name","孔乙己");
-        map.put("train","G109");
-        map.put("time","2016-4-6");
-        map.put("carriage","2车10号");
-        dataList.add(map);
+        tvOrderId=findViewById(R.id.tv_ordernum);
+        Intent intent=getIntent();
+        dataList= (List<Map<String, Object>>) intent.getSerializableExtra("data");
+        tvOrderId.setText(intent.getStringExtra("orderId"));
         OrderActivityAdapter activityAdapter=new OrderActivityAdapter(TicketSubmitActivity.this,dataList,true);
         ls.setAdapter(activityAdapter);
 
