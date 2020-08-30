@@ -21,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abc123.my12306.Order.OrderActivityAdapter;
-import com.example.abc123.my12306.Order.OrderSuccessActivity;
-import com.example.abc123.my12306.Order.UnpaidActivity;
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.util.NetUtils;
 
