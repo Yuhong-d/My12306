@@ -41,20 +41,14 @@ public class PaidSuccessActivity extends AppCompatActivity {
         imageView=findViewById(R.id.imageView);
         button=findViewById(R.id.btn);
         Intent intent=getIntent();
-        //textView.setText("您的订单"+intent.getStringExtra("num")+"支付成功，可以凭此二维码办理取票业务，也可以在订单中查看相关信息以及二维码");
-        dataList= new ArrayList<>();
-        Map<String,Object> map=new HashMap<>();
-        map.put("name","孔乙己");
-        map.put("train",intent.getStringExtra("train"));
-        map.put("time",intent.getStringExtra("time"));
-        map.put("carriage","2车10号");
-        dataList.add(map);
+        textView.setText("您的订单"+intent.getStringExtra("num")+"支付成功，可以凭此二维码办理取票业务，也可以在订单中查看相关信息以及二维码");
+        dataList= (List<Map<String, Object>>) intent.getSerializableExtra("data");
         StringBuffer s=new StringBuffer();
         for (int i=0;i<dataList.size();i++){
             Map<String,Object> map1=dataList.get(i);
             s.append(map1.get("name")+","+map1.get("train")+","+map1.get("time")+","+map1.get("carriage")+"\n");
         }
-        Bitmap bitmap=createQRCodeBitmap(s.toString(),500,500,"UTF-8",
+        Bitmap bitmap=createQRCodeBitmap(s.toString(),1000,1000,"UTF-8",
                 "H","1");
         imageView.setImageBitmap(bitmap);
 

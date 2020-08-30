@@ -235,8 +235,10 @@ public class TicketFragment extends Fragment {
                 //判断数据库中是否存在该记录
                 if (!searchListDbOperation.isHasRecord(record)) {
                     tempList.add(record);
-                }//新数据与旧数据相同时无法显示
-//                searchListDbOperation.deleteAllRecords();
+                }else{
+                    tempList.remove(searchListDbOperation.isHasRecord(record));
+                    tempList.add(record);
+                }
                 //将搜索记录保存至数据库中
                 searchListDbOperation.addRecords(record);
                 reversedList();
