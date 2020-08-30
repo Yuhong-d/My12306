@@ -72,9 +72,10 @@ public class AddNewcontact extends AppCompatActivity {
                //     String a = "1";
                     if ("1".equals(msg.obj)){
                         Toast.makeText(AddNewcontact.this,"保存成功！",Toast.LENGTH_SHORT).show();
-                        AddUserInfo.instance.finish();
-                        Intent intent=new Intent(AddNewcontact.this,AddUserInfo.class);
-                        startActivity(intent);
+                        Intent intent = new Intent(AddNewcontact.this, AddUserInfo.class);
+                        intent.putExtra("data", (Serializable) data);
+                        setResult(RESULT_OK, intent);
+                        finish();
                         AddNewcontact.this.finish();
 
                     }else {

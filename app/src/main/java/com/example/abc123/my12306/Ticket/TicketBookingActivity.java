@@ -82,7 +82,7 @@ public class TicketBookingActivity extends AppCompatActivity {
                     intent.putExtra("data",transdata);
                     intent.putExtra("orderId",msg.obj.toString());
                     startActivity(intent);
-                    TicketBookingActivity.this.finish();
+                    //TicketBookingActivity.this.finish();
                     break;
                 case 2:
                     Toast.makeText(TicketBookingActivity.this,"数据错误！",Toast.LENGTH_SHORT).show();
@@ -96,6 +96,7 @@ public class TicketBookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_ticket_booking);
 
+        data=new ArrayList<>();
         tv1=findViewById(R.id.starpl);
         tv2=findViewById(R.id.endpl);
         tv3=findViewById(R.id.ticknum);
@@ -105,7 +106,7 @@ public class TicketBookingActivity extends AppCompatActivity {
         tvSeat=findViewById(R.id.tickleft);
         tvPrice=findViewById(R.id.tvPrice);//单价
         tvTotal=findViewById(R.id.tvTotal);//订单总额
-        Intent intent=getIntent();
+        final Intent intent=getIntent();
         final Map<String,Object> map= (Map<String, Object>) intent.getSerializableExtra("dataMap");
         tv1.setText(map.get("fromStationName").toString());
         tv2.setText(map.get("toStationName").toString());
@@ -126,6 +127,10 @@ public class TicketBookingActivity extends AppCompatActivity {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
+                                if (j==0){
+                                    Toast.makeText(TicketBookingActivity.this,"不能删除登陆用户！",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 double price= Double.parseDouble(tvPrice.getText().toString());
                                 data.remove(j);
                                 adapter.notifyDataSetChanged();
@@ -152,6 +157,15 @@ public class TicketBookingActivity extends AppCompatActivity {
                         //   Intent intent = new Intent(TicketBookingActivity.this, TicketSubmitActivity.class);
                         //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         //   startActivity(intent);
+                        Log.d(TAG, "size "+data.size());
+                        if (Integer.parseInt(intent.getStringExtra("ticketNum"))<data.size()){
+                            Toast.makeText(TicketBookingActivity.this,"只有"+intent.getStringExtra("ticketNum")+"张票了！",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (data.size()==0){
+                            Toast.makeText(TicketBookingActivity.this,"请先选择乘车人！",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         if (!NetUtils.check(TicketBookingActivity.this)){
                             Toast.makeText(TicketBookingActivity.this,"当前网络不可用",Toast.LENGTH_SHORT).show();
                             return;

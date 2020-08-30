@@ -142,7 +142,7 @@ public class AddUserInfo extends AppCompatActivity {
                         Intent intent=new Intent(AddUserInfo.this,TicketBookingActivity.class);
                         intent.putExtra("data", (Serializable) newData);
                         setResult(RESULT_OK,intent);
-                        AddUserInfo.this.finish();
+                        finish();
                     }
  */
                 }
