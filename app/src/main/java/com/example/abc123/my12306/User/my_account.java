@@ -176,7 +176,7 @@ public class my_account extends AppCompatActivity {
                     case "电话":
                         final EditText editTel = new EditText(my_account.this);
                         editTel.setText((String) datalist.get(position).get("value"));
-                        new android.app.AlertDialog.Builder(my_account.this)
+                        new AlertDialog.Builder(my_account.this)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setTitle("请输入电话号码")
                                 .setView(editTel)

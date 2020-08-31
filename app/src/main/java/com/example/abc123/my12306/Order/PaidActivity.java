@@ -188,7 +188,7 @@ public class PaidActivity extends AppCompatActivity {
                 "H","1");
         imageView.setImageBitmap(bitmap);
         //设置Button的事件和内容
-        confirm.setOnClickListener(new android.view.View.OnClickListener() {
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();

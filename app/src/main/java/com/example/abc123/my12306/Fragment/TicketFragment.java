@@ -374,7 +374,7 @@ public class TicketFragment extends Fragment {
             searchRecordsList.add(tempList.get(i));
         }
         String[] seplace={searchRecordsList.get(0),searchRecordsList.get(1)};
-        arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.historytv,seplace);
+        arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.historytv,searchRecordsList);
         listView.setAdapter(arrayAdapter);
 
     }
