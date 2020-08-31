@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
+import android.text.method.NumberKeyListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -215,6 +217,21 @@ public class my_detailcontact extends AppCompatActivity {
                     case 4:
                         final EditText editTel = new EditText(my_detailcontact.this);
                         editTel.setText((String) data.get(position).get("key2"));
+                        //监听
+                        DigitsKeyListener numericOnlyListener = new DigitsKeyListener(false,false);
+                        editTel.setKeyListener(numericOnlyListener);
+                        //设置只能输入数字
+                        editTel.setKeyListener(new NumberKeyListener() {
+                            @NonNull
+                            @Override
+                            protected char[] getAcceptedChars() {
+                                return new char[] { '1', '2', '3', '4', '5', '6', '7', '8','9', '0' };
+                            }
+                            @Override
+                            public int getInputType() {
+                                return android.text.InputType.TYPE_CLASS_PHONE;
+                            }
+                        });
                         new AlertDialog.Builder(my_detailcontact.this)
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setTitle("请输入电话号码")
@@ -228,9 +245,14 @@ public class my_detailcontact extends AppCompatActivity {
                                             editTel.setError("请输入电话号码");
                                             editTel.requestFocus();
                                         }else{
-                                            DialogUtils.setClosable(dialog,true);
-                                            data.get(position).put("key2",newTel);
-                                            adapter.notifyDataSetChanged();
+                                            if (newTel.length()==11) {//判断位数
+                                                DialogUtils.setClosable(dialog,true);
+                                                data.get(position).put("value",newTel);
+                                                adapter.notifyDataSetChanged();
+                                            }else{
+                                                DialogUtils.setClosable(dialog,false);
+                                                editTel.setError("电话号码不是11位，请重新输入");
+                                            }
                                         }
                                     }
                                 })

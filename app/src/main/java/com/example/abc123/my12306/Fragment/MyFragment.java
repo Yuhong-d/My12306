@@ -1,6 +1,7 @@
 package com.example.abc123.my12306.Fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,8 +24,12 @@ import com.example.abc123.my12306.MainActivity;
 import com.example.abc123.my12306.NetUtils;
 import com.example.abc123.my12306.R;
 import com.example.abc123.my12306.User.my_account;
+import com.example.abc123.my12306.User.my_addcontact;
 import com.example.abc123.my12306.User.my_contact;
 import com.example.abc123.my12306.User.my_pwd;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -52,7 +57,32 @@ public class MyFragment extends Fragment {
     // 定义数组
     private String[] data = {"我的联系人","我的账户","我的密码"};
     private SharedPreferences sp;
-    private Handler handler;
+    private ProgressDialog progressDialog;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (progressDialog != null){
+                progressDialog.dismiss();
+            }
+            switch (msg.what){
+
+                case 1:
+                    String re1 =msg.obj.toString();
+                    if ("1".equals(re1) ){
+//
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(),MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+
+                    }else if ("0".equals(re1)){
+                        Toast.makeText(getActivity(),"退出失败！",Toast.LENGTH_SHORT).show();
+                        getActivity().finish();
+                    }
+                    break;
+            }
+        }
+    };
 
     public MyFragment() {
         // Required empty public constructor
@@ -67,15 +97,16 @@ public class MyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView =  view.findViewById(R.id.listView);
-        btn=view.findViewById(R.id.button);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_item,R.id.texttime, data);
+        listView = view.findViewById(R.id.listView);
+        btn = view.findViewById(R.id.button);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_item, R.id.texttime, data);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            Intent intent=new Intent();
+            Intent intent = new Intent();
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (data[position]){
+                switch (data[position]) {
                     case "我的联系人":
                         intent.setClass(getActivity(), my_contact.class);
                         startActivity(intent);
@@ -94,11 +125,62 @@ public class MyFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
-            }
+                if (!NetUtils.check(getActivity())) {
+                    Toast.makeText(getActivity(), "网络异常，请检查！",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                progressDialog = ProgressDialog.show(
+                        getActivity(),
+                        null,
+                        "正在退出中....",
+                        false,true);
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            // super.run();
+                            Message msg = handler.obtainMessage();
+                            OkHttpClient client = new OkHttpClient();
+                            //获取sessionId
+                            sp = getContext().getSharedPreferences("userinfo", Context.MODE_PRIVATE);
+                            String sessionId = sp.getString("cookie", "");
+                            Log.d(TAG, "session： " + sessionId);
+                            //建立请求
+                            RequestBody requestBody = new FormBody.Builder()
+                                    .build();
+                            Request request = new Request.Builder()
+                                    .url("http://10.0.2.2:8080/My12306/otn/Logout")
+                                    .addHeader("cookie", sessionId)
+                                    .post(requestBody)
+                                    .build();
+                            try {
+                                Response response = client.newCall(request).execute();
+                                String responsedata = response.body().string();
+                                Log.d(TAG, "获取的服务器数据： " + responsedata);
+                                if (response.isSuccessful()) {
+
+                                    //    JSONObject jsonObject=new JSONObject(responsedata);
+                                    Gson gson = new GsonBuilder().create();
+                                    String resultString = gson.fromJson(responsedata, String.class);
+                                    msg.obj = resultString;
+                                    msg.what = 1;
+                                } else {
+                                    msg.what = 2;
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                msg.what = 2;
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                                msg.what = 3;
+                            }
+                            handler.sendMessage(msg);
+                        }
+                    }.start();
+                }
+                // getActivity().finish();
         });
     }
-
     private void layDialog(){
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity() );
@@ -113,7 +195,7 @@ public class MyFragment extends Fragment {
         final Button confirm=(Button)view.findViewById(R.id.btnyes);
         final Button cancel=(Button)view.findViewById(R.id.btnno);
         //设置Button的事件和内容
-        confirm.setOnClickListener(new android.view.View.OnClickListener() {
+        confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!NetUtils.check(getContext())){
