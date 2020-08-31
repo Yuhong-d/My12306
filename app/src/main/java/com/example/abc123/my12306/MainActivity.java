@@ -16,8 +16,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
@@ -52,8 +54,11 @@ public class MainActivity extends AppCompatActivity {
         private TextView tv_register;
         private EditText edtusername,edtpassword;
         private CheckBox checkBox;
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
         private SharedPreferences sp;
         private Handler handler;
+
         //    private MyHelper myHelper;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
             sp=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
             edtusername.setText(sp.getString("et_username",""));
             edtpassword.setText(sp.getString("et_password",""));
+            //自动登录
+            sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+            editorMain=sprfMain.edit();
+           // editorMain.putBoolean("main",false);
+            //.getBoolean("main",false)；当找不到"main"所对应的键值是默认返回false
+            if(sprfMain.getBoolean("main",false)){
+                Intent intent=new Intent(MainActivity.this,ViewPagerActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+
             handler=new Handler(){
                 @Override
                 public void handleMessage(@NonNull Message msg) {
@@ -83,15 +99,18 @@ public class MainActivity extends AppCompatActivity {
                             }else if (result==1){
                                 SharedPreferences.Editor editor=sp.edit();
                                 if (checkBox.isChecked()){
+                                    editorMain.putBoolean("main",true);
+                                    editorMain.commit();
                                     editor.putString("et_username",edtusername.getText().toString());
                                     editor.putString("et_password",edtpassword.getText().toString());
                                 }else{
-                                    editor.clear();
+                                  //  editorMain.putBoolean("main",false);
+                                  //  editorMain.commit();
+                                  //  editor.clear();
                                 }
                                 //否则
                                 editor.putString("cookie",sessionId);
                                 editor.commit();
-
                                 Intent intent=new Intent(MainActivity.this, ViewPagerActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("sessionId",sessionId);

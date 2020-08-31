@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -53,6 +54,8 @@ import okhttp3.Response;
 public class MyFragment extends Fragment {
     private static String TAG="Password";
     private ListView listView;
+    SharedPreferences sprfMain;
+    SharedPreferences.Editor editorMain;
     private Button btn;//退出
     // 定义数组
     private String[] data = {"我的联系人","我的账户","我的密码"};
@@ -65,11 +68,10 @@ public class MyFragment extends Fragment {
                 progressDialog.dismiss();
             }
             switch (msg.what){
-
                 case 1:
                     String re1 =msg.obj.toString();
                     if ("1".equals(re1) ){
-//
+                        resetSprfMain();
                         Intent intent = new Intent();
                         intent.setClass(getActivity(),MainActivity.class);
                         startActivity(intent);
@@ -276,5 +278,11 @@ public class MyFragment extends Fragment {
         });
         dialog.show();
 
+    }
+    public void resetSprfMain(){
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        editorMain=sprfMain.edit();
+        editorMain.putBoolean("main",false);
+        editorMain.commit();
     }
 }
