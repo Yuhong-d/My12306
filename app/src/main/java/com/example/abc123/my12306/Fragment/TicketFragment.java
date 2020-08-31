@@ -236,7 +236,7 @@ public class TicketFragment extends Fragment {
                 if (!searchListDbOperation.isHasRecord(record)) {
                     tempList.add(record);
                 }else{
-                    tempList.remove(searchListDbOperation.isHasRecord(record));
+                    tempList.remove(record);
                     tempList.add(record);
                 }
                 //将搜索记录保存至数据库中
@@ -373,10 +373,14 @@ public class TicketFragment extends Fragment {
         for(int i = tempList.size() - 1 ; i >= 0 ; i --){
             searchRecordsList.add(tempList.get(i));
         }
-        String[] seplace={searchRecordsList.get(0),searchRecordsList.get(1)};
-        arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.historytv,searchRecordsList);
-        listView.setAdapter(arrayAdapter);
-
+        if(searchRecordsList.isEmpty() || searchRecordsList.size()==1){
+            arrayAdapter=new ArrayAdapter<String>(getActivity(),R.layout.account_list_itemhis,R.id.historytv,searchRecordsList);
+            listView.setAdapter(arrayAdapter);
+        }else {
+            String[] seplace={searchRecordsList.get(0),searchRecordsList.get(1)};
+            arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.account_list_itemhis, R.id.historytv, seplace);
+            listView.setAdapter(arrayAdapter);
+        }
     }
 
     @Override

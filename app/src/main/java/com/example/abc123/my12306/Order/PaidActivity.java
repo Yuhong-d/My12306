@@ -71,9 +71,11 @@ public class PaidActivity extends AppCompatActivity {
                         Timer timer = new Timer();
                         timer.schedule(new TimerTask() {
                             public void run() {
+                                Unpaid.instance.getActivity().finish();
                                 Intent intent1=new Intent(PaidActivity.this,Unpaid.instance.getActivity().getClass());
                                 intent1.putExtra("page",1);
                                 startActivity(intent1);
+                                PaidActivity.this.finish();
                             }
                         }, 3000);
                     }else{
@@ -182,7 +184,7 @@ public class PaidActivity extends AppCompatActivity {
         StringBuffer s=new StringBuffer();
         for (int i=0;i<dataList.size();i++){
             Map<String,Object> map=dataList.get(i);
-            s.append(map.get("name")+","+map.get("train")+","+map.get("time")+","+map.get("carriage"));
+            s.append(map.get("name")+","+map.get("train")+","+map.get("time")+","+map.get("carriage")+"\n");
         }
         Bitmap bitmap=createQRCodeBitmap(s.toString(),1000,1000,"UTF-8",
                 "H","1");

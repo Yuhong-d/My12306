@@ -56,6 +56,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Unpaid.instance.getActivity().finish();
                 Intent intent1=new Intent(OrderSuccessActivity.this,Unpaid.instance.getActivity().getClass());
                 intent1.putExtra("page",1);
                 startActivity(intent1);

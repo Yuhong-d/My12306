@@ -52,6 +52,7 @@ public class TicketSubmitActivity extends AppCompatActivity {
                         intent.putExtra("num",tvOrderId.getText().toString());
                         intent.putExtra("data", (Serializable) dataList);
                         startActivity(intent);
+                        TicketSubmitActivity.this.finish();
                     }else{
                         Toast.makeText(TicketSubmitActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
                     }

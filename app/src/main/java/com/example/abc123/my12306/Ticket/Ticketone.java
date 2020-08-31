@@ -80,8 +80,8 @@ public class Ticketone extends AppCompatActivity {
                 this,
                 data,
                 R.layout.ticket_item,
-                new String[]{"TicketNum", "img1", "img2", "fromTime", "toTime", "seat1", "seat2", "seat3", "seat4"},
-                new int[]{R.id.tv_banci, R.id.image_shi, R.id.image_zhong, R.id.tv_start, R.id.tv_over, R.id.tv_seat1, R.id.tv_seat2, R.id.tv_seat3, R.id.tv_seat4}
+                new String[]{"banci", "tv_start", "tv_end", "seat1", "seat2", "seat3", "seat4"},
+                new int[]{R.id.tv_banci, R.id.tv_start, R.id.tv_over, R.id.tv_seat1, R.id.tv_seat2, R.id.tv_seat3, R.id.tv_seat4}
         );
         listView.setAdapter(Adapter);
 
@@ -93,7 +93,7 @@ public class Ticketone extends AppCompatActivity {
                 intent.putExtra("start-end",tvTo.getText().toString());
                 intent.putExtra("trainNo",position);
                 intent.putExtra("time",texttime.getText().toString());
-                intent.putExtra("list", (Serializable) list);
+                intent.putExtra("list", (Serializable) data);
                 startActivity(intent);
             }
         });
@@ -167,6 +167,8 @@ public class Ticketone extends AppCompatActivity {
                     //解析Json
                     Gson gson = new GsonBuilder().create();
                     Train[] trains = gson.fromJson(responsedata, Train[].class);
+                    Map<String,Object> map = new HashMap<>();
+
                     //System.out.print(trains.toString());
                     Log.d("trains", trains.toString());
                     return trains;
@@ -195,27 +197,30 @@ public class Ticketone extends AppCompatActivity {
                 } else {
                     for (Train train : trains) {
                         Map<String, Object> map = new HashMap<>();
-                        map.put("TicketNum", train.getTrainNo());
-                        if (train.getStartStationName().equals(train.getFromStationName())) {
-                            map.put("img1", R.drawable.flg_shi);
-                        } else {
-                            map.put("img1", R.drawable.flg_guo);
-                        }
-                        if (train.getEndStationName().equals(train.getToStationName())) {
-                            map.put("img2", R.drawable.flg_zhong);
-                        } else {
-                            map.put("img2", R.drawable.flg_guo);
-                        }
-                        map.put("fromTime", train.getStartTime());
-                        map.put("toTime", train.getArriveTime() + "(" + train.getDayDifference() + ")");
+                        map.put("banci", train.getTrainNo());
+//                        if (train.getStartStationName().equals(train.getFromStationName())) {
+////                            map.put("img1", R.drawable.flg_shi);
+////                        } else {
+////                            map.put("img1", R.drawable.flg_guo);
+////                        }
+////                        if (train.getEndStationName().equals(train.getToStationName())) {
+////                            map.put("img2", R.drawable.flg_zhong);
+////                        } else {
+////                            map.put("img2", R.drawable.flg_guo);
+////                        }
+                        map.put("tv_start", train.getStartTime());
+                        map.put("tv_end", train.getArriveTime() + "(" + train.getDayDifference() + ")");
+                        map.put("durationTime",train.getDurationTime());
                         String[] seatKey = {"seat1", "seat2", "seat3", "seat4"};
                         int i = 0;
                         Map<String, Seat> seats = train.getSeats();
                         for (String key : seats.keySet()) {
                             Seat seat = seats.get(key);
                             map.put(seatKey[i++], seat.getSeatName() + ":" + seat.getSeatNum());
+                            map.put("price"+(i), seat.getSeatPrice());
                         }
                         data.add(map);
+                        Log.d(TAG, "onPostExecute: "+data.toString());
                     }
                 }
                 Adapter.notifyDataSetChanged();

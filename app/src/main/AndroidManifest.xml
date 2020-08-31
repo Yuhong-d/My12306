@@ -43,6 +43,9 @@
         <activity
             android:name=".Ticket.AddUserInfo"
             android:label="车票预定" />
+        <activity
+            android:name=".Order.OrderSuccessActivity"
+            android:label="支付成功！" />
         <activity android:name=".Ticket.CityActivity" />
         <activity android:name=".ViewPagerActivity" />
         <activity

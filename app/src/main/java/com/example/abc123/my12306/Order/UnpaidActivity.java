@@ -57,6 +57,7 @@ public class UnpaidActivity extends AppCompatActivity {
                     intent.putExtra("num",tv.getText().toString());
                     intent.putExtra("data", (Serializable) dataList);
                     startActivity(intent);
+                    UnpaidActivity.this.finish();
                     }else{
                         Toast.makeText(UnpaidActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
                     }
@@ -82,7 +83,7 @@ public class UnpaidActivity extends AppCompatActivity {
                     }else if (result==1) {
                         Toast.makeText(UnpaidActivity.this,"您已取消订单",Toast.LENGTH_SHORT).show();
 //                        finish();
-
+                        Unpaid.instance.getActivity().finish();
                         Intent intent1=new Intent(UnpaidActivity.this,Unpaid.instance.getActivity().getClass());
                         intent1.putExtra("page",1);
                         startActivity(intent1);
