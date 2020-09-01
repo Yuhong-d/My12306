@@ -27,5 +27,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         return list.get(position);
     }
 
+    @Override
+    public long getItemId(int position) {
+        return list.get(position).hashCode();
+    }
 }
 

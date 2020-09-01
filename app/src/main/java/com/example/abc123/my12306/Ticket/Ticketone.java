@@ -102,15 +102,19 @@ public class Ticketone extends AppCompatActivity {
     }
 
     private class MyTicketListener implements View.OnClickListener {
+
         @Override
         public void onClick(View view) {
             Calendar calendar = Calendar.getInstance();
             String oldDateFrom = texttime.getText().toString();
             Log.d("date", oldDateFrom);
             int oldYear = Integer.parseInt(oldDateFrom.split("-")[0]);
-            int oldMonth = Integer.parseInt(oldDateFrom.split("-")[1]) - 1;
+            int oldMonth = Integer.parseInt(oldDateFrom.split("-")[1])-1 ;
+            Log.d(TAG, "oldMonth:"+oldMonth);
             int oldDay = Integer.parseInt(oldDateFrom.split("-")[2].split(" ")[0]);
+            Log.d(TAG, "oldday:"+oldDay);
             calendar.set(oldYear, oldMonth, oldDay);
+            Calendar calendarNew = Calendar.getInstance();
             switch (view.getId()) {
                 case R.id.preday:
                     calendar.add(Calendar.DAY_OF_MONTH, -1);
